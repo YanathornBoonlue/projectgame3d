@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cuhrg75qvx1jx"]
+
+[ext_resource type="PackedScene" uid="uid://b8b0ly1me8c3h" path="res://models/Decorations/speed_cola_machine_-_world_at_war.glb" id="1_4ulms"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4ulms"]
+size = Vector3(0.6890564, 1.4447632, 0.5236511)
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_4ulms")]
+
+[node name="Sketchfab_model" parent="." index="0"]
+transform = Transform3D(0.6, 0, 0, 0, -2.6226834e-08, 0.6, 0, -0.6, -2.6226834e-08, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03541565, 0.74331665, -0.004348755)
+shape = SubResource("BoxShape3D_4ulms")
