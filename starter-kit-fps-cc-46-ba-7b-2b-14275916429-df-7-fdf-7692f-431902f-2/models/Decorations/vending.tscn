@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0crrcpj6pjbp"]
+
+[ext_resource type="PackedScene" uid="uid://c25t5g28nudwc" path="res://models/Decorations/dirty_vending_machine.glb" id="1_80f8y"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_80f8y"]
+size = Vector3(1.850378, 0.53837585, 2.2149312)
+
+[node name="Sketchfab_Scene2" instance=ExtResource("1_80f8y")]
+
+[node name="Sketchfab_model" parent="." index="0"]
+transform = Transform3D(0.97, 0, 0, 0, -4.2400046e-08, 0.97, 0, -0.97, -4.2400046e-08, 0, 0, 0)
+
+[node name="polySurface1175_lambert1_0_002_lambert1_001_0" parent="Sketchfab_model/868e9bc4e8d945ac9c21f7c1fd7ce804_fbx/RootNode/polySurface1175_lambert1_0_002" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 1.4210855e-14, 0.99999994, 155.56909, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Sketchfab_model" index="1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sketchfab_model/StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, -6.039613e-14, 0, 6.039613e-14, 1, -0.1134995, -0.014964524, 1.1011614)
+shape = SubResource("BoxShape3D_80f8y")
