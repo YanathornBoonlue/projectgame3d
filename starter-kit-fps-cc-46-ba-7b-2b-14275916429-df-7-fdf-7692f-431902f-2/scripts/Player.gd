@@ -5,6 +5,7 @@ const WALK_SPEED = 5.0
 const SPRINT_SPEED = 8.0
 const JUMP_VELOCITY = 4.5
 const SENSITIVITY = 0.004
+const HIT_STAGGER = 8.0
 
 #bob variables
 const BOB_FREQ = 2.4
@@ -14,6 +15,9 @@ var t_bob = 0.0
 #fov variables
 const BASE_FOV = 75.0
 const FOV_CHANGE = 1.5
+
+# signal
+signal player_hit
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = 9.8
@@ -79,3 +83,7 @@ func _headbob(time) -> Vector3:
 	pos.y = sin(time * BOB_FREQ) * BOB_AMP
 	pos.x = cos(time * BOB_FREQ / 2) * BOB_AMP
 	return pos
+
+func hit(dir):
+	emit_signal("player_hit")
+	velocity += dir * HIT_STAGGER
