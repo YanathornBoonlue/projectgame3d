@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://rjh4ifidqrfp"]
+
+[ext_resource type="PackedScene" uid="uid://c5vgh1v6juur0" path="res://models/platform-medium.glb" id="1_ihbp6"]
+[ext_resource type="PackedScene" uid="uid://c6ssc516idj01" path="res://models/Liferaft made of logs.glb" id="2_roydm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fo7to"]
+size = Vector3(2.77979, 0.138672, 2.91248)
+
+[node name="platform-medium" instance=ExtResource("1_ihbp6")]
+
+[node name="platform-medium2#StaticBody3D" type="StaticBody3D" parent="." index="0"]
+
+[node name="platform-medium2_StaticBody3D#CollisionShape3D" type="CollisionShape3D" parent="platform-medium2#StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0163574, 0.44553, 0.093811)
+shape = SubResource("BoxShape3D_fo7to")
+
+[node name="platform-medium2" parent="." index="1"]
+visible = false
+
+[node name="Liferaft made of logs" parent="." index="2" instance=ExtResource("2_roydm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.69973, 0.426038, 0.0744279)
+
+[node name="Liferaft made of logs2" parent="." index="3" instance=ExtResource("2_roydm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.685304, 0.426038, 0.0744279)

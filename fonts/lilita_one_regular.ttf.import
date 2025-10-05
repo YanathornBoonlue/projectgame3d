@@ -2,7 +2,7 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://biqtga8moh7ah"
+uid="uid://d0cxd77jybrcn"
 path="res://.godot/imported/lilita_one_regular.ttf-68cc4ab6825bdd499d1ad608190f5213.fontdata"
 
 [deps]
@@ -21,7 +21,6 @@ msdf_pixel_range=8
 msdf_size=48
 allow_system_fallback=true
 force_autohinter=false
-modulate_color_glyphs=false
 hinting=1
 subpixel_positioning=1
 keep_rounding_remainders=true

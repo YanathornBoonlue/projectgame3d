@@ -1,10 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://oqfhfp1a80qd"]
+[gd_scene load_steps=5 format=3 uid="uid://dy017k58p20sk"]
 
-[ext_resource type="PackedScene" uid="uid://g2w2608bc2dy" path="res://models/cloud.glb" id="1_2mo3p"]
-[ext_resource type="Script" uid="uid://bfgpo8fvf136p" path="res://objects/cloud.gd" id="2_rmotl"]
+[ext_resource type="PackedScene" uid="uid://bsrmqj84lksd7" path="res://models/cloud.glb" id="1_pjiy0"]
+[ext_resource type="Script" uid="uid://dlh7g3g207i7c" path="res://objects/cloud.gd" id="2_hugjq"]
+[ext_resource type="PackedScene" uid="uid://cgbt714aujy56" path="res://models/sea horse.glb" id="3_rv8y7"]
 
-[node name="cube2" instance=ExtResource("1_2mo3p")]
-script = ExtResource("2_rmotl")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m5bs8"]
+transparency = 1
+distance_fade_mode = 1
+distance_fade_min_distance = 2.0
+distance_fade_max_distance = 3.0
 
-[node name="cube" parent="." index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+[node name="cube" instance=ExtResource("1_pjiy0")]
+script = ExtResource("2_hugjq")
+
+[node name="cloud2" parent="." index="0"]
+visible = false
+surface_material_override/0 = SubResource("StandardMaterial3D_m5bs8")
+
+[node name="sea horse" parent="." index="1" instance=ExtResource("3_rv8y7")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.357088, 0)
