@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bqqgyqafm7xwp"]
+[gd_scene load_steps=27 format=3 uid="uid://bqqgyqafm7xwp"]
 
 [ext_resource type="Script" uid="uid://djpme521r3cxe" path="res://scripts/main.gd" id="1_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://dl2ed4gkybggf" path="res://objects/player.tscn" id="2_onms2"]
@@ -24,8 +24,8 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pm3ni"]
 shader = ExtResource("3_jscy8")
-shader_parameter/top_color = Color(0.35, 0.55, 0.95, 1)
-shader_parameter/horizon_color = Color(0.8, 0.9, 1, 1)
+shader_parameter/top_color = Color(0.447859, 0.573792, 0.7493, 1)
+shader_parameter/horizon_color = Color(0.878185, 0.929165, 0.485215, 1)
 shader_parameter/sun_dir = Vector3(0, 0.8, 0.6)
 shader_parameter/sun_color = Color(1, 0.95, 0.85, 1)
 shader_parameter/sun_size = 0.996
@@ -41,40 +41,43 @@ shader_parameter/cloud_intensity = 0.25
 sky_material = SubResource("ShaderMaterial_pm3ni")
 
 [sub_resource type="Environment" id="Environment_pm3ni"]
+background_mode = 1
+background_color = Color(0.0666667, 0.313726, 0.494118, 1)
 sky = SubResource("Sky_y6deb")
 ambient_light_source = 3
 ambient_light_energy = 0.8
 tonemap_mode = 3
-tonemap_exposure = 0.6
+tonemap_exposure = 0.88
 glow_enabled = true
 glow_intensity = 1.1
-volumetric_fog_enabled = true
+fog_enabled = true
+fog_light_energy = 0.3
+fog_sun_scatter = 0.3
+fog_density = 0.0545
+fog_sky_affect = 0.2
+fog_height = 48.41
+fog_height_density = 0.0245
 volumetric_fog_density = 0.036
 adjustment_enabled = true
 adjustment_saturation = 1.1
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_pm3ni"]
 size = Vector2(600, 600)
-center_offset = Vector3(0, -0.28, 0)
+center_offset = Vector3(0, 0.355, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y6deb"]
 render_priority = 0
 shader = ExtResource("4_pm3ni")
-shader_parameter/deep_color = Color(0, 0.15, 0.35, 1)
+shader_parameter/deep_color = Color(0.207504, 0.595253, 0.81285, 1)
 shader_parameter/shallow_color = Color(0.1, 0.55, 0.85, 1)
 shader_parameter/alpha = 0.7
-shader_parameter/wave_amp = 0.35
+shader_parameter/wave_amp = 0.575
 shader_parameter/wave_len = 10.0
-shader_parameter/wave_speed = 0.8
-shader_parameter/wave2_amp = 0.2
+shader_parameter/wave_speed = 0.815
+shader_parameter/wave2_amp = 0.385
 shader_parameter/wave2_len = 3.5
 shader_parameter/wave2_speed = 1.6
 shader_parameter/fresnel_power = 5.0
-
-[sub_resource type="FogMaterial" id="FogMaterial_pm3ni"]
-density = 0.03
-albedo = Color(0.811765, 0.913725, 1, 1)
-height_falloff = 0.2
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_jkv2x")
@@ -85,12 +88,9 @@ script = ExtResource("1_jkv2x")
 environment = SubResource("Environment_pm3ni")
 
 [node name="SeaPlane" type="MeshInstance3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.294554, 0)
 mesh = SubResource("PlaneMesh_pm3ni")
 surface_material_override/0 = SubResource("ShaderMaterial_y6deb")
-
-[node name="FogVolume" type="FogVolume" parent="Environment"]
-size = Vector3(1000, 30, 1000)
-material = SubResource("FogMaterial_pm3ni")
 
 [node name="Player" parent="." node_paths=PackedStringArray("view") instance=ExtResource("2_onms2")]
 transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, -37.3149, 0.74791, 0.040434)
@@ -270,16 +270,16 @@ transform = Transform3D(1.56209, -1.37982, 1.71508, 1.97375, 1.80907, -0.342241,
 transform = Transform3D(1.56209, -1.37982, 1.71508, -0.262086, 1.9715, 1.82484, -2.18558, -1.22262, 1.00699, 5.49991, 2.70954, -13.6079)
 
 [node name="cube16" parent="World" instance=ExtResource("13_drtpy")]
-transform = Transform3D(-2.4714, 0.790539, 0.743507, 0.64028, 2.55521, -0.588601, -0.876241, -0.362565, -2.52711, 7.7731, 2.70954, -0.350373)
+transform = Transform3D(-2.4714, 0.790539, 0.743507, 0.64028, 2.55521, -0.588601, -0.876241, -0.362565, -2.52711, 7.7731, 1.45656, -0.350373)
 
 [node name="cube17" parent="World" instance=ExtResource("13_drtpy")]
-transform = Transform3D(-2.15283, -1.17805, 1.12386, -1.25721, 2.38667, 0.0935074, -1.03456, -0.448889, -2.45229, 12.0623, 2.70954, 0.353648)
+transform = Transform3D(-2.15283, -1.17805, 1.12386, -1.25721, 2.38667, 0.0935074, -1.03456, -0.448889, -2.45229, 12.0623, 1.66511, 0.353648)
 
 [node name="Turtle" parent="World" instance=ExtResource("12_muem4")]
-transform = Transform3D(0.01905, 0, 0.00609064, 0, 0.02, 0, -0.00609064, 0, 0.01905, 23.0961, 3.57038, -21.4395)
+transform = Transform3D(0.01905, 0, 0.00609064, 0, 0.02, 0, -0.00609064, 0, 0.01905, 23.0961, 1.08287, -21.4395)
 
 [node name="Turtle2" parent="World" instance=ExtResource("12_muem4")]
-transform = Transform3D(-0.0173325, 0, 0.00997914, 0, 0.02, 0, -0.00997914, 0, -0.0173325, 23.0961, 3.57038, 10.8377)
+transform = Transform3D(-0.0173325, 0, 0.00997914, 0, 0.02, 0, -0.00997914, 0, -0.0173325, 23.0961, 1.28204, 10.8377)
 
 [node name="brick" parent="World" instance=ExtResource("12_jkv2x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.11913, 1.98572, -0.0886177)
@@ -301,7 +301,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.5708, 1.67527, 2.17644)
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.422618, -0.694272, 0.582563, 0, 0.642788, 0.766044, -0.906308, 0.323744, -0.271654, 0, 0, 0)
-light_color = Color(0, 0.998167, 0.963854, 1)
+light_color = Color(0.890196, 0.913725, 0.909804, 1)
 shadow_enabled = true
 shadow_opacity = 0.75
 

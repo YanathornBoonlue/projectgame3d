@@ -41,3 +41,8 @@ func get_respawn_position() -> Vector3:
 	else:
 		push_warning("Respawn requested but start not set; returning Vector3.ZERO")
 		return Vector3.ZERO
+
+var force_spawn_at_start_next := false
+func request_fresh_start() -> void:
+	force_spawn_at_start_next = true
+	clear_checkpoint()

@@ -48,7 +48,7 @@ script = ExtResource("2_gaakh")
 [node name="Mesh" parent="." instance=ExtResource("2_1o7s2")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.295597, 0)
 shape = SubResource("SphereShape3D_bnkeq")
 
 [node name="Particles" type="GPUParticles3D" parent="."]
