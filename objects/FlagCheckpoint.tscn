@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bss1k81h6eqbl"]
 
 [ext_resource type="PackedScene" uid="uid://21wxbg8obrkh" path="res://models/flagpole_super_mario_bros.glb" id="1_s5mk6"]
-[ext_resource type="Script" uid="uid://c2atxns8i23jy" path="res://flag_checkpoint.gd" id="2_avgcb"]
+[ext_resource type="Script" uid="uid://c2atxns8i23jy" path="res://scripts/flag_checkpoint.gd" id="2_avgcb"]
 [ext_resource type="AudioStream" uid="uid://lux4l8amu6ct" path="res://sounds/mixkit-unlock-game-notification-253.ogg" id="3_umjns"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s5mk6"]

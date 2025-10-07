@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dyrr8l7f1lak"]
 
 [ext_resource type="Texture2D" uid="uid://b1ggh5juv4ecf" path="res://asset/vecteezy_underwater-ocean-background-black-silhouettes-swimming-sea_8570732-1.jpg" id="1_aqgun"]
-[ext_resource type="Script" uid="uid://dylwfl358ldxy" path="res://scenes/result.gd" id="1_gd8ac"]
+[ext_resource type="Script" uid="uid://dylwfl358ldxy" path="res://scripts/result.gd" id="1_gd8ac"]
 
 [node name="Result" type="Control"]
 layout_mode = 3
