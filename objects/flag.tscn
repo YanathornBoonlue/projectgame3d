@@ -3,16 +3,14 @@
 [ext_resource type="PackedScene" uid="uid://dtjvjdjl8cs6e" path="res://models/flag.glb" id="1_vjerf"]
 [ext_resource type="Script" uid="uid://bkhwfov4qj3mk" path="res://objects/flag.gd" id="2_2iksx"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_2iksx"]
-size = Vector3(0.305939, 1.17615, 0.657349)
+[sub_resource type="BoxShape3D" id="BoxShape3D_vjerf"]
+size = Vector3(0.531372, 1.73816, 0.935669)
 
 [node name="flag" instance=ExtResource("1_vjerf")]
 script = ExtResource("2_2iksx")
 
-[node name="Area3D" type="Area3D" parent="." index="0"]
+[node name="Area3D" type="Area3D" parent="." index="1"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0045929, 0.592468, 0.254456)
-shape = SubResource("BoxShape3D_2iksx")
-
-[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00323486, 0.36908, 0.157898)
+shape = SubResource("BoxShape3D_vjerf")
