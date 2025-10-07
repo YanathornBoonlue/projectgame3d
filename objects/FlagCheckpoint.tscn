@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://bss1k81h6eqbl"]
+
+[ext_resource type="PackedScene" uid="uid://21wxbg8obrkh" path="res://models/flagpole_super_mario_bros.glb" id="1_s5mk6"]
+[ext_resource type="Script" uid="uid://c2atxns8i23jy" path="res://flag_checkpoint.gd" id="2_avgcb"]
+[ext_resource type="AudioStream" uid="uid://lux4l8amu6ct" path="res://sounds/mixkit-unlock-game-notification-253.ogg" id="3_umjns"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s5mk6"]
+size = Vector3(1.19336, 9.24329, 1)
+
+[node name="FlagCheckpoint" instance=ExtResource("1_s5mk6")]
+script = ExtResource("2_avgcb")
+
+[node name="Sketchfab_model" parent="." index="0"]
+transform = Transform3D(0.615, 0, 0, 0, -2.68825e-08, 0.615, 0, -0.615, -2.68825e-08, -90.255, -0.855, 0)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="2"]
+stream = ExtResource("3_umjns")
+
+[node name="Area3D" type="Area3D" parent="." index="3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0966797, 4.12164, 0)
+shape = SubResource("BoxShape3D_s5mk6")

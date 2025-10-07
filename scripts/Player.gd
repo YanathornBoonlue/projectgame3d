@@ -5,6 +5,7 @@ signal coin_collected
 @export_subgroup("Components")
 @export var view: Node3D
 
+@export var fall_kill_y: float = -20.0  # ตกเกินนี้ให้ตาย/เกิดใหม่
 @export_subgroup("Properties")
 @export var movement_speed = 250
 @export var jump_strength = 7
@@ -24,6 +25,11 @@ var coins = 0
 @onready var sound_footsteps = $SoundFootsteps
 @onready var model = $Fish
 @onready var animation = $Fish/AnimationPlayer
+
+
+func _ready() -> void:
+	add_to_group("Player")
+	GameManager.set_start(global_position)  # บอกจุดเริ่มต้นหนึ่งครั้ง
 
 # Functions
 
@@ -54,9 +60,10 @@ func _physics_process(delta):
 	rotation.y = lerp_angle(rotation.y, rotation_direction, delta * 10)
 
 	# Falling/respawning
-
-	if position.y < -10:
-		get_tree().reload_current_scene()
+	if global_position.y < fall_kill_y:
+		respawn()
+	#if position.y < -10:
+		#get_tree().reload_current_scene()
 
 	# Animation for scale (jumping and landing)
 
@@ -161,3 +168,20 @@ func collect_coin():
 	coins += 1
 
 	coin_collected.emit(coins)
+	
+	
+func respawn() -> void:
+	# รีเซ็ตความเร็วและแรงโน้มถ่วงทั้งหมด
+	velocity = Vector3.ZERO
+	gravity = 0.0
+	previously_floored = false
+	jump_single = true
+	jump_double = true
+
+	# เทเลพอร์ตหลังเฟรมฟิสิกส์เพื่อตัดแรงที่ค้างอยู่
+	call_deferred("_do_respawn")
+	
+func _do_respawn() -> void:
+	var p := GameManager.get_respawn_position()
+	# ดันขึ้นจากพื้นเล็กน้อยกันติด/ทะลุ
+	global_position = p + Vector3.UP * 0.2
