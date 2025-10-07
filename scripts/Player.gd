@@ -1,5 +1,5 @@
 extends CharacterBody3D
-
+signal respawned 
 signal coin_collected
 
 @export_subgroup("Components")
@@ -13,12 +13,12 @@ signal coin_collected
 var movement_velocity: Vector3
 var rotation_direction: float
 var gravity = 0
-
+var is_being_sucked := false
 var previously_floored = false
 
 var jump_single = true
 var jump_double = true
-
+var controls_disabled := false
 var coins = 0
 
 @onready var particles_trail = $ParticlesTrail
@@ -29,7 +29,15 @@ var coins = 0
 
 func _ready() -> void:
 	add_to_group("Player")
-	GameManager.set_start(global_position)  # บอกจุดเริ่มต้นหนึ่งครั้ง
+	GameManager.set_start(global_position)  # ส่งตำแหน่งของ Player (Node3D)
+	velocity = Vector3.ZERO
+	gravity = 0.0
+	previously_floored = false
+	jump_single = true
+	jump_double = true
+	controls_disabled = false      # <<< เปิดคอนโทรลกลับ
+
+	call_deferred("_do_respawn") 
 
 # Functions
 
@@ -60,7 +68,7 @@ func _physics_process(delta):
 	rotation.y = lerp_angle(rotation.y, rotation_direction, delta * 10)
 
 	# Falling/respawning
-	if global_position.y < fall_kill_y:
+	if not is_being_sucked and global_position.y < fall_kill_y:
 		respawn()
 	#if position.y < -10:
 		#get_tree().reload_current_scene()
@@ -112,7 +120,9 @@ func handle_effects(delta):
 # Handle movement input
 
 func handle_controls(delta):
-
+	if controls_disabled:
+		movement_velocity = Vector3.ZERO
+		return
 	# Movement
 
 	var input := Vector3.ZERO
@@ -137,11 +147,10 @@ func handle_controls(delta):
 # Handle gravity
 
 func handle_gravity(delta):
-
+	if controls_disabled:     # <<< ถูกดูด/คุมไม่ได้ -> ไม่สะสมแรงตก
+		return
 	gravity += 25 * delta
-
 	if gravity > 0 and is_on_floor():
-
 		jump_single = true
 		gravity = 0
 
@@ -171,17 +180,27 @@ func collect_coin():
 	
 	
 func respawn() -> void:
-	# รีเซ็ตความเร็วและแรงโน้มถ่วงทั้งหมด
+	controls_disabled = false
+	is_being_sucked = false
 	velocity = Vector3.ZERO
 	gravity = 0.0
 	previously_floored = false
 	jump_single = true
 	jump_double = true
-
-	# เทเลพอร์ตหลังเฟรมฟิสิกส์เพื่อตัดแรงที่ค้างอยู่
 	call_deferred("_do_respawn")
 	
 func _do_respawn() -> void:
 	var p := GameManager.get_respawn_position()
 	# ดันขึ้นจากพื้นเล็กน้อยกันติด/ทะลุ
 	global_position = p + Vector3.UP * 0.2
+	respawned.emit()
+
+func set_controls_disabled(v: bool) -> void:
+	controls_disabled = v
+
+func set_sucked_state(v: bool) -> void:
+	is_being_sucked = v
+	controls_disabled = v
+	if v:
+		gravity = 0.0
+		velocity = Vector3.ZERO

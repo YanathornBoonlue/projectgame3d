@@ -19,8 +19,8 @@ func _on_body_entered(body: Node) -> void:
 		return
 
 	_activated = true
-	GameManager.set_checkpoint(global_position, id)
-
+	GameManager.set_checkpoint(global_position, &"cp_flag_1")
+	
 	# เล่นอนิเมชันชักธงถ้ามี
 	if anim and anim.has_animation("Take 001"):
 		anim.play("Take 001")
