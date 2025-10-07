@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bqqgyqafm7xwp"]
+[gd_scene load_steps=28 format=3 uid="uid://bqqgyqafm7xwp"]
 
 [ext_resource type="Script" uid="uid://djpme521r3cxe" path="res://scripts/main.gd" id="1_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://dl2ed4gkybggf" path="res://objects/player.tscn" id="2_onms2"]
@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://dn0jey50etq5q" path="res://scripts/level_timer.gd" id="19_0ld40"]
 [ext_resource type="PackedScene" uid="uid://d0yfyduubda02" path="res://scenes/black_hole.tscn" id="20_gqmmt"]
 [ext_resource type="AudioStream" uid="uid://46pucge2kixc" path="res://sounds/riser-hole-391174.ogg" id="21_yc10j"]
+[ext_resource type="AudioStream" uid="uid://dhbwde8tmtu8r" path="res://sounds/Park-Bird-Are-You-Lost-powah-SoundLoadMate.com.ogg" id="22_jscy8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pm3ni"]
 shader = ExtResource("3_jscy8")
@@ -371,5 +372,10 @@ hud_label_path = NodePath("../HUD/TimerLabel")
 spawn_delay = 0.0
 spawn_distance = 20.0
 spawn_sound = ExtResource("21_yc10j")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("22_jscy8")
+volume_db = -15.928
+autoplay = true
 
 [connection signal="coin_collected" from="Player" to="HUD" method="_on_coin_collected"]
