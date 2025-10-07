@@ -1,7 +1,7 @@
 extends StaticBody3D
 
 @onready var bottom_detector: Area3D = $BottomDetector
-@onready var mesh: Node3D = $Mesh
+@onready var mesh: Node3D = $Bubble
 @onready var particles: GPUParticles3D = $Particles
 @onready var colshape: CollisionShape3D = $CollisionShape3D
 
@@ -22,7 +22,7 @@ func explode() -> void:
 		return
 	exploded = true
 
-	Audio.play("res://sounds/break.ogg")  # เสียงแตก
+	Audio.play("res://sounds/bubble-pop.ogg")  # เสียงแตก
 	particles.restart()
 
 	# ทุกอย่างที่กระทบฟิสิกส์ ให้ทำแบบ deferred

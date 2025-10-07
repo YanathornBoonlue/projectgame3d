@@ -6,6 +6,8 @@ var checkpoint_position: Vector3 = Vector3.ZERO
 var has_start := false
 var has_checkpoint := false
 var checkpoint_id: StringName = &""
+signal flags_reset
+const REASON_TIMEOUT: StringName = &"time_out"
 
 func set_start(pos: Vector3) -> void:
 	start_position = pos
@@ -19,7 +21,10 @@ func set_checkpoint(pos: Vector3, id: StringName = &"") -> void:
 	checkpoint_position = pos
 	checkpoint_id = id
 	has_checkpoint = true
-
+	
+	# ถ้าเป็นกรณีหมดเวลา ให้รีเซ็ตธงทั้งแมพ
+	if id == REASON_TIMEOUT:
+		flags_reset.emit()
 func clear_checkpoint() -> void:
 	if has_start:
 		checkpoint_position = start_position
