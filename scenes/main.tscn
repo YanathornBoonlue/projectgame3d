@@ -14,8 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://85ldumyetgou" path="res://objects/brick.tscn" id="12_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://b3rocf0j1var0" path="res://models/Turtle.glb" id="12_muem4"]
 [ext_resource type="PackedScene" uid="uid://dy017k58p20sk" path="res://objects/cloud.tscn" id="13_drtpy"]
-[ext_resource type="Texture2D" uid="uid://cd7oyc56ehkx1" path="res://sprites/coin.png" id="13_jfda3"]
 [ext_resource type="PackedScene" uid="uid://bwepp3f361roc" path="res://objects/flag.tscn" id="13_muem4"]
+[ext_resource type="Texture2D" uid="uid://dmxfhm10tse1q" path="res://sprites/kapun.png" id="17_jscy8"]
 [ext_resource type="LabelSettings" uid="uid://dfbgphmit8k3w" path="res://scenes/main.tres" id="17_yc10j"]
 [ext_resource type="PackedScene" uid="uid://bss1k81h6eqbl" path="res://objects/FlagCheckpoint.tscn" id="18_dp3eg"]
 [ext_resource type="Script" uid="uid://dn0jey50etq5q" path="res://scripts/level_timer.gd" id="19_0ld40"]
@@ -101,6 +101,7 @@ fall_kill_y = -10.0
 transform = Transform3D(0.707107, -0.298836, 0.640856, 0, 0.906308, 0.422618, -0.707107, -0.298836, 0.640856, 0, 0, 0)
 script = ExtResource("5_bg0fr")
 target = NodePath("../Player")
+pitch_max = 80.0
 
 [node name="Camera" type="Camera3D" parent="View"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
@@ -191,16 +192,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.635, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.635, 4)
 
 [node name="coin2" parent="World" instance=ExtResource("10_fwhys")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0437, 1.97005, -0.33003)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0437, 1.97005, -1.21893)
 
 [node name="coin3" parent="World" instance=ExtResource("10_fwhys")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0437, 1.97005, -1.33003)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0437, 1.97005, -2.01359)
 
 [node name="coin5" parent="World" instance=ExtResource("10_fwhys")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.3156, 1.28466, 3.91952)
 
 [node name="coin6" parent="World" instance=ExtResource("10_fwhys")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.23304, 0.909148, 3.93388)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.85136, 0.909148, 3.93388)
 
 [node name="coin7" parent="World" instance=ExtResource("10_fwhys")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.11229, 2.01644, 3.95543)
@@ -212,19 +213,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9647, 0.801836, 3.99354)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0795909, 3.9794, -5.83243)
 
 [node name="coin4" parent="World" instance=ExtResource("10_fwhys")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0437, 1.97005, -2.33003)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0437, 1.97005, -2.86052)
 
 [node name="coin11" parent="World" instance=ExtResource("10_fwhys")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.70933, 5.33928, -2.00422)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.87482, 2.89476, -3.27735)
 
 [node name="coin12" parent="World" instance=ExtResource("10_fwhys")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.979, 1.77544, 2.8622)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.979, 1.97018, 2.47228)
 
 [node name="coin13" parent="World" instance=ExtResource("10_fwhys")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.8074, 2.16054, 3.33288)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.8074, 1.96715, 3.33288)
 
 [node name="coin14" parent="World" instance=ExtResource("10_fwhys")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.0865, 0.519372, -0.102506)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.0865, 0.893542, -0.102506)
 
 [node name="coin15" parent="World" instance=ExtResource("10_fwhys")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.88025, 3.9794, -6.6266)
@@ -233,7 +234,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.88025, 3.9794, -6.6266)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.1215, 3.9794, -6.27971)
 
 [node name="coin17" parent="World" instance=ExtResource("10_fwhys")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8739, 3.9794, -3.20204)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.6195, 3.83955, -3.42723)
 
 [node name="coin18" parent="World" instance=ExtResource("10_fwhys")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.0245, 3.9794, -5.81028)
@@ -286,6 +287,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.11913, 1.98572, -0.0886177
 [node name="brick2" parent="World" instance=ExtResource("12_jkv2x")]
 transform = Transform3D(0.855265, 0, -0.518191, 0, 1, 0, 0.518191, 0, 0.855265, -6.76351, 3.21501, -2.01957)
 
+[node name="brick4" parent="World" instance=ExtResource("12_jkv2x")]
+transform = Transform3D(0.855265, 0, -0.518191, 0, 1, 0, 0.518191, 0, 0.855265, -32.1559, 2.24474, 0.0332454)
+
 [node name="brick3" parent="World" instance=ExtResource("12_jkv2x")]
 transform = Transform3D(0.939082, 0, 0.343692, 0, 1, 0, -0.343692, 0, 0.939082, -19.034, 3.21501, 2.86945)
 
@@ -317,29 +321,29 @@ script = ExtResource("11_apvpm")
 
 [node name="Icon" type="TextureRect" parent="HUD"]
 layout_mode = 0
-offset_left = 57.0
-offset_top = 67.0
-offset_right = 313.0
-offset_bottom = 323.0
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("13_jfda3")
+offset_left = 26.0
+offset_top = 14.0
+offset_right = 501.0
+offset_bottom = 504.0
+scale = Vector2(0.128823, 0.115523)
+texture = ExtResource("17_jscy8")
 
 [node name="x" type="Label" parent="HUD"]
 layout_mode = 0
-offset_left = 112.0
-offset_top = 64.0
-offset_right = 144.0
-offset_bottom = 123.0
+offset_left = 87.0
+offset_top = 13.0
+offset_right = 119.0
+offset_bottom = 72.0
 text = "×"
 label_settings = ExtResource("17_yc10j")
 metadata/_edit_use_anchors_ = true
 
 [node name="Coins" type="Label" parent="HUD"]
 layout_mode = 0
-offset_left = 144.0
-offset_top = 64.0
-offset_right = 368.0
-offset_bottom = 123.0
+offset_left = 119.0
+offset_top = 13.0
+offset_right = 343.0
+offset_bottom = 72.0
 text = "0"
 label_settings = ExtResource("17_yc10j")
 metadata/_edit_use_anchors_ = true

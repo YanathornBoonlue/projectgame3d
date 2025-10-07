@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8ggihh27mlrr"
-path.s3tc="res://.godot/imported/blob_shadow.png-d19f4ffceb1d99dd3331acec2dc6d7df.s3tc.ctex"
+uid="uid://0x1o852of5ia"
+path.s3tc="res://.godot/imported/jelly_fish_spongebob_1.png-8f940f49484f5c3700655d0ae466c2d9.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "c61932c8a73c0f8c9e7d57d1b6b6fbdc"
+}
 
 [deps]
 
-source_file="res://sprites/blob_shadow.png"
-dest_files=["res://.godot/imported/blob_shadow.png-d19f4ffceb1d99dd3331acec2dc6d7df.s3tc.ctex"]
+source_file="res://models/jelly_fish_spongebob_1.png"
+dest_files=["res://.godot/imported/jelly_fish_spongebob_1.png-8f940f49484f5c3700655d0ae466c2d9.s3tc.ctex"]
 
 [params]
 

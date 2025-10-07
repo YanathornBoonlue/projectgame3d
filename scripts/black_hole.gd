@@ -47,7 +47,7 @@ func _physics_process(delta: float) -> void:
 
 func _consume_player() -> void:
 	if GameManager.has_method("set_checkpoint"):
-		GameManager.set_checkpoint(GameManager.start_position, &"time_out")
+		GameManager.set_checkpoint(GameManager.start_position, GameManager.REASON_TIMEOUT)
 	if _player:
 		_player.call_deferred("set_sucked_state", false)  # <<< ปลดก่อนเกิดใหม่
 		_player.call_deferred("respawn")

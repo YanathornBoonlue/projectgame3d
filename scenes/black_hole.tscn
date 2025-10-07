@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://d0yfyduubda02"]
+[gd_scene load_steps=20 format=3 uid="uid://d0yfyduubda02"]
 
 [ext_resource type="Script" uid="uid://bgkpwlt55txat" path="res://scripts/black_hole.gd" id="1_fhwcw"]
+[ext_resource type="Texture2D" uid="uid://8ggihh27mlrr" path="res://sprites/blob_shadow.png" id="2_ic33f"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_fhwcw"]
 radius = 2.5
@@ -40,6 +41,7 @@ color_ramp = SubResource("GradientTexture1D_ic33f")
 transparency = 1
 shading_mode = 0
 vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("2_ic33f")
 billboard_mode = 3
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
@@ -87,6 +89,7 @@ transparency = 1
 shading_mode = 0
 vertex_color_use_as_albedo = true
 albedo_color = Color(0, 0, 0, 1)
+albedo_texture = ExtResource("2_ic33f")
 billboard_mode = 3
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
@@ -95,6 +98,13 @@ particles_anim_loop = false
 [sub_resource type="QuadMesh" id="QuadMesh_w61qo"]
 material = SubResource("StandardMaterial3D_6w0aq")
 size = Vector2(0.18, 0.18)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ic33f"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_djpiu"]
+material = SubResource("StandardMaterial3D_ic33f")
 
 [node name="BlackHole" type="Area3D"]
 script = ExtResource("1_fhwcw")
@@ -128,3 +138,6 @@ omni_range = 6.0
 strength = 8.0
 attenuation = 1.2
 radius = 4.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_djpiu")
