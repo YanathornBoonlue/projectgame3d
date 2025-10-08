@@ -108,7 +108,7 @@ func _physics_process(delta: float) -> void:
 	previously_floored = is_on_floor()
 
 # ---- Effects / Anim -------------------------------------------------
-func handle_effects(delta: float) -> void:
+func handle_effects(_delta: float) -> void:
 	particles_trail.emitting = false
 	sound_footsteps.stream_paused = true
 
