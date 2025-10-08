@@ -37,6 +37,14 @@ scale_curve = SubResource("CurveTexture_f46kd")
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_ffboj")
+fall_kill_y = null
+movement_speed = null
+sprint_speed = null
+jump_strength = null
+max_hp = null
+invuln_duration = null
+hit_stun_duration = null
+knockback_force = null
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.612097, -0.028414)

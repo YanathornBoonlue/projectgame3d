@@ -1,5 +1,8 @@
 extends Node
 
+var coins: int = 0
+signal coins_changed(coins: int)
+
 var start_position: Vector3 = Vector3.ZERO
 var checkpoint_position: Vector3 = Vector3.ZERO
 
@@ -46,3 +49,21 @@ var force_spawn_at_start_next := false
 func request_fresh_start() -> void:
 	force_spawn_at_start_next = true
 	clear_checkpoint()
+	
+var result_state: String = "none"  # "victory" | "defeat" | "none"
+
+# --- เหรียญ ---
+func add_coins(n: int = 1) -> int:
+	coins += n
+	coins_changed.emit(coins)
+	return coins
+
+func reset_progress() -> void:
+	coins = 0
+	coins_changed.emit(coins)
+	checkpoint_position = Vector3.INF
+	start_position = Vector3.ZERO
+	result_state = "none"
+
+# --- ผลลัพธ์ Victory/Defeat (ใช้กับ result.tscn) ---
+#var result_state: String = "none"

@@ -1,0 +1,319 @@
+[gd_scene load_steps=26 format=3 uid="uid://cur7r7vatfjc6"]
+
+[ext_resource type="Script" uid="uid://dh3smj7rryu2h" path="res://scripts/second_level.gd" id="1_xnaau"]
+[ext_resource type="Shader" uid="uid://byrvhvi2v2euo" path="res://environment/SeaSky_sky.gdshader" id="2_xpalr"]
+[ext_resource type="Material" uid="uid://booc27br2ap2l" path="res://models/colormap.tres" id="3_0btso"]
+[ext_resource type="Shader" uid="uid://ct02fstyotx5r" path="res://environment/SpaceOcean.gdshader" id="4_bp0bh"]
+[ext_resource type="PackedScene" uid="uid://dl2ed4gkybggf" path="res://objects/player.tscn" id="5_0vunq"]
+[ext_resource type="Script" uid="uid://bcg2kkbsnttec" path="res://scripts/view.gd" id="6_f3die"]
+[ext_resource type="PackedScene" uid="uid://cnymdajj1vsqm" path="res://objects/platform.tscn" id="7_rpiwq"]
+[ext_resource type="PackedScene" uid="uid://dfpisimsgf5ce" path="res://objects/coin.tscn" id="12_45mfd"]
+[ext_resource type="PackedScene" uid="uid://dejs551t3kxpn" path="res://objects/ResultArea.tscn" id="16_xnaau"]
+[ext_resource type="Script" uid="uid://bap462su1xjtx" path="res://scripts/hud.gd" id="17_1bgd4"]
+[ext_resource type="Texture2D" uid="uid://dmxfhm10tse1q" path="res://sprites/kapun.png" id="18_p8fua"]
+[ext_resource type="LabelSettings" uid="uid://dfbgphmit8k3w" path="res://scenes/main.tres" id="19_x6qvs"]
+[ext_resource type="Script" uid="uid://dn0jey50etq5q" path="res://scripts/level_timer.gd" id="20_fpeoe"]
+[ext_resource type="PackedScene" uid="uid://d0yfyduubda02" path="res://scenes/black_hole.tscn" id="21_qi5dt"]
+[ext_resource type="AudioStream" uid="uid://46pucge2kixc" path="res://sounds/riser-hole-391174.ogg" id="22_a63ko"]
+[ext_resource type="AudioStream" uid="uid://dhbwde8tmtu8r" path="res://sounds/Park-Bird-Are-You-Lost-powah-SoundLoadMate.com.ogg" id="23_rt6uy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7t56b"]
+shader = ExtResource("2_xpalr")
+shader_parameter/top_color = Color(0.447859, 0.573792, 0.7493, 1)
+shader_parameter/horizon_color = Color(0.878185, 0.929165, 0.485215, 1)
+shader_parameter/sun_dir = Vector3(0, 0.8, 0.6)
+shader_parameter/sun_color = Color(1, 0.95, 0.85, 1)
+shader_parameter/sun_size = 0.996
+shader_parameter/sun_glow_size = 0.985
+shader_parameter/sun_intensity = 1.2
+shader_parameter/cloud_scale = 2.5
+shader_parameter/cloud_coverage = 0.55
+shader_parameter/cloud_speed = 0.02
+shader_parameter/cloud_color = Color(1, 1, 1, 1)
+shader_parameter/cloud_intensity = 0.25
+
+[sub_resource type="Sky" id="Sky_y6deb"]
+sky_material = SubResource("ShaderMaterial_7t56b")
+
+[sub_resource type="Environment" id="Environment_5qvx8"]
+background_mode = 1
+background_color = Color(0.0666667, 0.313726, 0.494118, 1)
+sky = SubResource("Sky_y6deb")
+ambient_light_source = 3
+ambient_light_energy = 0.8
+tonemap_mode = 3
+tonemap_exposure = 0.88
+glow_enabled = true
+glow_intensity = 1.1
+fog_enabled = true
+fog_light_energy = 0.3
+fog_sun_scatter = 0.3
+fog_density = 0.0545
+fog_sky_affect = 0.2
+fog_height = 48.41
+fog_height_density = 0.0245
+volumetric_fog_density = 0.036
+adjustment_enabled = true
+adjustment_saturation = 1.1
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_4ay4a"]
+vertices = PackedVector3Array(52.6427, 1.23365, 23.2588, 53.1427, 1.23365, 23.0088, 53.1427, 1.23365, 19.2588, 52.6427, 1.23365, 19.0088, 37.1427, 1.23365, 33.0088, 44.6427, 1.23365, 28.5088, 43.3927, 1.23365, -30.7412, 42.3927, 1.23365, -31.7412, 37.3927, 1.23365, -32.9912, -37.3573, -0.266349, -32.9912, -43.1073, -0.516349, -31.4912, -43.3573, -0.516349, -30.7412, -44.3573, -0.516349, 28.5088, -42.8573, -0.516349, 31.5088, -37.1073, -0.266349, 33.0088, 42.8927, 1.23365, 31.5088, 52.6427, 1.23365, 28.5088, 30.6545, 1.23365, 5.52783, -55.8573, -0.766349, -30.7412, -55.8573, -0.766349, 28.5088, 52.6427, 1.23365, -30.7412)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(2, 0, 3), PackedInt32Array(3, 0, 5), PackedInt32Array(3, 5, 4), PackedInt32Array(7, 6, 8), PackedInt32Array(8, 6, 3), PackedInt32Array(10, 9, 11), PackedInt32Array(11, 9, 12), PackedInt32Array(14, 13, 12), PackedInt32Array(5, 15, 4), PackedInt32Array(0, 16, 5), PackedInt32Array(9, 14, 12), PackedInt32Array(14, 17, 4), PackedInt32Array(4, 17, 3), PackedInt32Array(3, 17, 8), PackedInt32Array(8, 17, 9), PackedInt32Array(9, 17, 14), PackedInt32Array(19, 18, 12), PackedInt32Array(12, 18, 11), PackedInt32Array(6, 20, 3)]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4ay4a"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1203"]
+next_pass = ExtResource("3_0btso")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1w308"]
+size = Vector2(600, 600)
+center_offset = Vector3(0, 0.355, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k4me4"]
+render_priority = 0
+shader = ExtResource("4_bp0bh")
+shader_parameter/deep_color = Color(0.207504, 0.595253, 0.81285, 1)
+shader_parameter/shallow_color = Color(0.1, 0.55, 0.85, 1)
+shader_parameter/alpha = 0.7
+shader_parameter/wave_amp = 0.575
+shader_parameter/wave_len = 10.0
+shader_parameter/wave_speed = 0.815
+shader_parameter/wave2_amp = 0.385
+shader_parameter/wave2_len = 3.5
+shader_parameter/wave2_speed = 1.6
+shader_parameter/fresnel_power = 5.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_46leb"]
+
+[node name="Second Level" type="Node3D"]
+script = ExtResource("1_xnaau")
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_5qvx8")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Environment"]
+navigation_mesh = SubResource("NavigationMesh_4ay4a")
+
+[node name="SandPlane" type="MeshInstance3D" parent="Environment/NavigationRegion3D"]
+transform = Transform3D(-45.4884, 0.0169665, 0, -0.899636, -0.857879, 0, 0, 0, 33.4912, 0, 0, 0)
+mesh = SubResource("PlaneMesh_4ay4a")
+surface_material_override/0 = SubResource("StandardMaterial3D_i1203")
+
+[node name="platform" parent="Environment/NavigationRegion3D" instance=ExtResource("7_rpiwq")]
+transform = Transform3D(-45.4886, 0.0164714, 0, -0.873424, -0.857842, 0, 0, 0, 33.491, 0, 0.15, 0)
+
+[node name="SeaPlane" type="MeshInstance3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.541312, 0)
+mesh = SubResource("PlaneMesh_1w308")
+surface_material_override/0 = SubResource("ShaderMaterial_k4me4")
+
+[node name="Player" parent="." node_paths=PackedStringArray("view") instance=ExtResource("5_0vunq")]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, -37.3149, 0.74791, 0.040434)
+fall_kill_y = -10.0
+view = NodePath("../View")
+
+[node name="View" type="Node3D" parent="." node_paths=PackedStringArray("target")]
+transform = Transform3D(0.707107, -0.298836, 0.640856, 0, 0.906308, 0.422618, -0.707107, -0.298836, 0.640856, 0, 0, 0)
+script = ExtResource("6_f3die")
+target = NodePath("../Player")
+pitch_max = 80.0
+
+[node name="Camera" type="Camera3D" parent="View"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+current = true
+fov = 40.0
+
+[node name="World" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World"]
+transform = Transform3D(8.00784, -7.44609, 0, 10.3207, 5.77744, 0, 0, 0, 9.6699, 8.24919, 0.338226, -34.183)
+mesh = SubResource("BoxMesh_46leb")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="World"]
+transform = Transform3D(6.93751, -6.45084, 4.82969, 10.3207, 5.77744, 0, -3.99956, 3.71899, 8.37741, 25.8748, -0.587017, 28.6202)
+mesh = SubResource("BoxMesh_46leb")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="World"]
+transform = Transform3D(6.93751, -6.45084, 4.82969, 10.3207, 5.77744, 0, -3.99956, 3.71899, 8.37741, 25.8748, -2.81976, 21.6616)
+mesh = SubResource("BoxMesh_46leb")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="World"]
+transform = Transform3D(-7.73548, 1.7737, 7.57665, -5.30133, 7.26051, -4.75519, -9.09395, -5.74126, -3.67279, 1.7028, -3.21803, 26.0134)
+mesh = SubResource("BoxMesh_46leb")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="World"]
+transform = Transform3D(9.96568, 5.48351, 2.72595, -5.30133, 7.26051, -4.75519, -6.57442, 2.45748, 7.96645, -6.86201, -5.11674, -24.2693)
+mesh = SubResource("BoxMesh_46leb")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="World"]
+transform = Transform3D(4.44468, -10.5221, 5.48631, 17.5186, 2.85882, 0, -1.18339, 2.80149, 20.606, 37.2991, 0.338226, -28.9079)
+mesh = SubResource("BoxMesh_46leb")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="World"]
+transform = Transform3D(2.48503, -10.3253, -13.0049, 11.0163, 3.15522, -1.82994e-07, 1.47991, -6.14901, 21.8376, 43.3373, 0.338226, 27.7305)
+mesh = SubResource("BoxMesh_46leb")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="World"]
+transform = Transform3D(2.10648, -9.16044, 18.3763, 14.7757, 8.6285, 2.57287, -7.53698, 14.3553, 10.1798, 42.085, 0.33823, -20.1434)
+mesh = SubResource("BoxMesh_46leb")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="World"]
+transform = Transform3D(11.518, 8.76498, -12.1641, 21.4953, -9.66905, 0.0248974, 11.8154, 9.04613, 11.8126, 43.4981, 0.338226, 11.4591)
+mesh = SubResource("BoxMesh_46leb")
+
+[node name="flag" parent="World" instance=ExtResource("16_xnaau")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.0052, 0.734821, -3.5187)
+
+[node name="coin" parent="World" instance=ExtResource("12_45mfd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.163652, -18.0316)
+
+[node name="coin2" parent="World" instance=ExtResource("12_45mfd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.64645, 0.163652, -10.4508)
+
+[node name="coin3" parent="World" instance=ExtResource("12_45mfd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.2155, 0.163652, -18.0316)
+
+[node name="coin4" parent="World" instance=ExtResource("12_45mfd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.163652, 11.5867)
+
+[node name="coin5" parent="World" instance=ExtResource("12_45mfd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.4057, 0.565805, 4.68265)
+
+[node name="coin6" parent="World" instance=ExtResource("12_45mfd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.264, -0.0844914, 6.73273)
+
+[node name="coin7" parent="World" instance=ExtResource("12_45mfd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.1625, 0.0667309, -9.59849)
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.422618, -0.694272, 0.582563, 0, 0.642788, 0.766044, -0.906308, 0.323744, -0.271654, 0, 0, 0)
+light_color = Color(0.890196, 0.913725, 0.909804, 1)
+shadow_enabled = true
+shadow_opacity = 0.75
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -640.0
+offset_right = 640.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+script = ExtResource("17_1bgd4")
+
+[node name="Icon" type="TextureRect" parent="HUD"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 14.0
+offset_right = 501.0
+offset_bottom = 504.0
+scale = Vector2(0.128823, 0.115523)
+texture = ExtResource("18_p8fua")
+
+[node name="x" type="Label" parent="HUD"]
+layout_mode = 0
+offset_left = 87.0
+offset_top = 13.0
+offset_right = 119.0
+offset_bottom = 72.0
+text = "×"
+label_settings = ExtResource("19_x6qvs")
+metadata/_edit_use_anchors_ = true
+
+[node name="Coins" type="Label" parent="HUD"]
+layout_mode = 0
+offset_left = 119.0
+offset_top = 13.0
+offset_right = 343.0
+offset_bottom = 72.0
+text = "0"
+label_settings = ExtResource("19_x6qvs")
+metadata/_edit_use_anchors_ = true
+
+[node name="TimerLabel" type="Label" parent="HUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.47
+anchor_top = 0.082
+anchor_right = 0.527
+anchor_bottom = 0.114
+offset_left = -0.600037
+offset_top = -50.04
+offset_right = -0.559998
+offset_bottom = -37.08
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 26
+label_settings = ExtResource("19_x6qvs")
+
+[node name="LevelTimer" type="Timer" parent="."]
+script = ExtResource("20_fpeoe")
+total_seconds = 60
+blackhole_scene = ExtResource("21_qi5dt")
+hud_label_path = NodePath("../HUD/TimerLabel")
+spawn_delay = 0.0
+spawn_distance = 20.0
+spawn_sound = ExtResource("22_a63ko")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("23_rt6uy")
+volume_db = -15.928
+autoplay = true
+
+[node name="ZombieSpawnTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="Spawns" type="Node3D" parent="."]
+
+[node name="Spawn1" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.6664, 0, 6.78663)
+
+[node name="Spawn2" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.8467, 0, 6.90752)
+
+[node name="Spawn3" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5942, 0, 6.44568)
+
+[node name="Spawn4" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.86495, 0, 8.95684)
+
+[node name="Spawn5" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.29999, 0, 11.7761)
+
+[node name="Spawn6" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.7648, -1.90735e-06, -6.79048)
+
+[node name="Spawn7" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.2835, 1.90735e-06, -5.41349)
+
+[node name="Spawn8" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.7004, 0, -5.17478)
+
+[node name="Spawn9" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4354, 0, -7.81494)
+
+[node name="Spawn10" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.10926, 1.90735e-06, -10.9064)
+
+[node name="Spawn11" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.80407, 0, -7.07541)
+
+[node name="Spawn12" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.4262, 0, -23.1257)
+
+[node name="Spawn13" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.63898, 0, -6.96017)
+
+[node name="Spawn14" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.77824, 0, 14.3119)
+
+[node name="Spawn15" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5657, 0, 8.54173)
+
+[connection signal="timeout" from="ZombieSpawnTimer" to="." method="_on_zombie_spawn_timer_timeout"]
