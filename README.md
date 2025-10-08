@@ -2,7 +2,7 @@
 
 วิชา CP352203-Computer Game Development   ภาคการศึกษาต้น ปีการศึกษา 2568
 
-ชื่อเกม : The Mock Adventure
+ชื่อเกม : การผจญภัยของม็อค (The Mock Adventure)
 
 จัดทำโดย : 
 
