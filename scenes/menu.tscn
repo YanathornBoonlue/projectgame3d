@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfh5rbrtemvyi"]
+[gd_scene load_steps=4 format=3 uid="uid://cfh5rbrtemvyi"]
 
+[ext_resource type="Script" uid="uid://p76fqcu06bc0" path="res://scripts/menu.gd" id="1_con2f"]
 [ext_resource type="Texture2D" uid="uid://bm1mibbw53xsj" path="res://asset/Menu.png" id="1_vjb58"]
 [ext_resource type="FontFile" uid="uid://d0cxd77jybrcn" path="res://fonts/lilita_one_regular.ttf" id="2_con2f"]
 
@@ -10,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_con2f")
 
 [node name="Menu" type="Sprite2D" parent="."]
 position = Vector2(649, 362)
@@ -42,3 +44,6 @@ offset_right = 677.0
 offset_bottom = 434.0
 theme_override_font_sizes/font_size = 35
 text = "EXIT"
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
