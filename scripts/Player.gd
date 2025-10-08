@@ -1,73 +1,72 @@
 extends CharacterBody3D
-signal respawned 
+signal respawned
 signal coin_collected
 
 @export_subgroup("Components")
 @export var view: Node3D
 
-@export var fall_kill_y: float = -20.0  # ตกเกินนี้ให้ตาย/เกิดใหม่
+@export var fall_kill_y: float = -20.0
 @export_subgroup("Properties")
-@export var movement_speed = 5
-@export var jump_strength = 7
+@export var movement_speed: float = 5.0
+@export var jump_strength: float = 7.0
 
-var _attached_platform: Node3D = null
-var movement_velocity: Vector3
+@export var sprint_multiplier: float = 1.5
+var is_sprinting := false
+
 var rotation_direction: float
-var gravity = 0
+var gravity: float = 0.0
 var is_being_sucked := false
-var previously_floored = false
-
-
-var jump_single = true
-var jump_double = true
+var previously_floored := false
 var controls_disabled := false
-var coins = 0
 
-@onready var particles_trail = $ParticlesTrail
-@onready var sound_footsteps = $SoundFootsteps
-@onready var model = $Fish
-@onready var animation = $Fish/AnimationPlayer
+var jump_single := true
+var jump_double := true
+var coins := 0
 
-@export_range(0.0, 2.0, 0.01) var floor_snap_len: float = 0.25  # 0.25–0.5 กำลังดี
+# ติดตามแพลตฟอร์มจากเฟรมก่อนหน้า (ใช้กับ displacement-carry)
+var _attached_platform: Node3D = null
+
+@onready var particles_trail: GPUParticles3D = $ParticlesTrail
+@onready var sound_footsteps: AudioStreamPlayer = $SoundFootsteps
+@onready var model: Node3D = $Fish
+@onready var animation: AnimationPlayer = $Fish/AnimationPlayer
+
+@export_range(0.0, 2.0, 0.01) var floor_snap_len: float = 0.5
 @export_range(0.0, 89.0, 0.1) var floor_angle_deg: float = 46.0
 
 func _ready() -> void:
 	add_to_group("Player")
-	GameManager.set_start(global_position)  # ส่งตำแหน่งของ Player (Node3D)
+	GameManager.set_start(global_position)
 	velocity = Vector3.ZERO
 	gravity = 0.0
 	previously_floored = false
 	jump_single = true
 	jump_double = true
-	controls_disabled = false      # <<< เปิดคอนโทรลกลับ
-
-	call_deferred("_do_respawn") 
+	controls_disabled = false
+	call_deferred("_do_respawn")
 	_apply_floor_tuning()
-# Functions
 
-func _physics_process(delta):
-
-	# Handle functions
-
-	handle_controls(delta)
-	handle_gravity(delta)
-
-	handle_effects(delta)
-
-	# Movement
-
+func _physics_process(delta: float) -> void:
+	# 1) อินพุตแนวนอน
 	var input_dir := Vector3.ZERO
-	input_dir.x = Input.get_axis("move_left", "move_right")
-	input_dir.z = Input.get_axis("move_forward", "move_back")
-	input_dir = input_dir.rotated(Vector3.UP, view.rotation.y)
-	if input_dir.length() > 1.0:
-		input_dir = input_dir.normalized()
+	if not controls_disabled:
+		input_dir.x = Input.get_axis("move_left", "move_right")
+		input_dir.z = Input.get_axis("move_forward", "move_back")
+		input_dir = input_dir.rotated(Vector3.UP, view.rotation.y)
+		if input_dir.length() > 1.0:
+			input_dir = input_dir.normalized()
+		if Input.is_action_just_pressed("jump") and (jump_single or jump_double):
+			jump()
 
-	# 2) บวก "ระยะที่แท่นขยับในเฟรมนี้" เข้าตำแหน่งผู้เล่น (เฉพาะ XZ) **ก่อน** move_and_slide()
+	# 2) สปรินต์
+	is_sprinting = (not controls_disabled) and Input.is_action_pressed("sprint")
+	var current_speed: float = movement_speed * (sprint_multiplier if is_sprinting else 1.0)
+	var desired_h: Vector3 = input_dir * current_speed
+
+	# 3) บวกระยะที่แท่นขยับ (เฉพาะ XZ) ก่อนคิดฟิสิกส์เฟรมนี้
 	_apply_platform_displacement_pre()
 
-	# 3) ตั้งความเร็วแนวนอนของผู้เล่น
-	var desired_h: Vector3 = input_dir * float(movement_speed)
+	# 4) ตั้งความเร็วแนวนอน
 	if is_on_floor():
 		velocity.x = desired_h.x
 		velocity.z = desired_h.z
@@ -77,116 +76,82 @@ func _physics_process(delta):
 		velocity.x = hv.x
 		velocity.z = hv.y
 
-	# 4) แรงโน้มถ่วงเดิม
+	# 5) แรงโน้มถ่วง
+	if not controls_disabled:
+		gravity += 25.0 * delta
+	if gravity > 0.0 and is_on_floor():
+		jump_single = true
+		gravity = 0.0
 	velocity.y = -gravity
 
+	# 6) ฟิสิกส์ชน
 	move_and_slide()
-	# Rotation
 
-	if Vector2(velocity.z, velocity.x).length() > 0:
+	# 7) อัปเดตแพลตฟอร์มที่เหยียบอยู่ (ไว้ใช้เฟรมถัดไป)
+	_update_attached_platform()
+
+	# 8) หมุนโมเดล & เอฟเฟกต์/อนิเมชัน (หลังได้ velocity เฟรมนี้)
+	if Vector2(velocity.z, velocity.x).length() > 0.0:
 		rotation_direction = Vector2(velocity.z, velocity.x).angle()
+	rotation.y = lerp_angle(rotation.y, rotation_direction, delta * 10.0)
+	handle_effects(delta)
 
-	rotation.y = lerp_angle(rotation.y, rotation_direction, delta * 10)
-
-	# Falling/respawning
+	# 9) ตกเหว = รีสปอน
 	if not is_being_sucked and global_position.y < fall_kill_y:
 		respawn()
-	#if position.y < -10:
-		#get_tree().reload_current_scene()
 
-	# Animation for scale (jumping and landing)
-
-	model.scale = model.scale.lerp(Vector3(1, 1, 1), delta * 10)
-
-	# Animation when landing
-
-	if is_on_floor() and gravity > 2 and !previously_floored:
+	# 10) squash & stretch เล็กน้อย
+	model.scale = model.scale.lerp(Vector3(1, 1, 1), delta * 10.0)
+	if is_on_floor() and gravity > 2.0 and not previously_floored:
 		model.scale = Vector3(1.25, 0.75, 1.25)
 		Audio.play("res://sounds/land.ogg")
-
 	previously_floored = is_on_floor()
 
-# Handle animation(s)
-
-func handle_effects(delta):
-
+# ---- Effects / Anim -------------------------------------------------
+func handle_effects(delta: float) -> void:
 	particles_trail.emitting = false
 	sound_footsteps.stream_paused = true
 
 	if is_on_floor():
-		var horizontal_velocity = Vector2(velocity.x, velocity.z)
-		var speed_factor = horizontal_velocity.length() / float(movement_speed) 
+		var horizontal_velocity: Vector2 = Vector2(velocity.x, velocity.z)
+		var speed_len: float = horizontal_velocity.length()
+		var current_speed_local: float = movement_speed * (sprint_multiplier if is_sprinting else 1.0)
+		var speed_factor: float = speed_len / maxf(0.001, current_speed_local)
+
 		if speed_factor > 0.05:
-			if animation.current_animation != "walk":
-				animation.play("walk", 0.1)
+			if is_sprinting and animation.has_animation("run"):
+				if animation.current_animation != "run": animation.play("run", 0.1)
+			else:
+				if animation.current_animation != "walk": animation.play("walk", 0.1)
 
 			if speed_factor > 0.3:
 				sound_footsteps.stream_paused = false
 				sound_footsteps.pitch_scale = speed_factor
-
 			if speed_factor > 0.75:
 				particles_trail.emitting = true
+		else:
+			if animation.current_animation != "idle":
+				animation.play("idle", 0.1)
 
-		elif animation.current_animation != "idle":
-			animation.play("idle", 0.1)
-			
-		if animation.current_animation == "walk":
-			animation.speed_scale = speed_factor
+		if animation.current_animation == "walk" or animation.current_animation == "run":
+			animation.speed_scale = clampf(speed_factor, 0.6, 1.6)
 		else:
 			animation.speed_scale = 1.0
-			
 	elif animation.current_animation != "jump":
 		animation.play("jump", 0.1)
 
-# Handle movement input
-
-func handle_controls(delta):
-	if controls_disabled:
-		return
-	# Movement
-
-	# Jumping
-
-	if Input.is_action_just_pressed("jump"):
-
-		if jump_single or jump_double:
-			jump()
-
-# Handle gravity
-
-func handle_gravity(delta):
-	if controls_disabled:     # <<< ถูกดูด/คุมไม่ได้ -> ไม่สะสมแรงตก
-		return
-	gravity += 25 * delta
-	if gravity > 0 and is_on_floor():
-		jump_single = true
-		gravity = 0
-
-# Jumping
-
-func jump():
-
+# ---- Jump / Gravity -------------------------------------------------
+func jump() -> void:
 	Audio.play("res://sounds/jump.ogg")
-
 	gravity = -jump_strength
-
 	model.scale = Vector3(0.5, 1.5, 0.5)
-
 	if jump_single:
-		jump_single = false;
-		jump_double = true;
+		jump_single = false
+		jump_double = true
 	else:
-		jump_double = false;
+		jump_double = false
 
-# Collecting coins
-
-func collect_coin(d):
-
-	coins += d
-
-	coin_collected.emit(coins)
-	
-	
+# ---- Respawn --------------------------------------------------------
 func respawn() -> void:
 	controls_disabled = false
 	is_being_sucked = false
@@ -196,13 +161,13 @@ func respawn() -> void:
 	jump_single = true
 	jump_double = true
 	call_deferred("_do_respawn")
-	
+
 func _do_respawn() -> void:
 	var p := GameManager.get_respawn_position()
-	# ดันขึ้นจากพื้นเล็กน้อยกันติด/ทะลุ
 	global_position = p + Vector3.UP * 0.2
 	respawned.emit()
 
+# ---- Helpers --------------------------------------------------------
 func set_controls_disabled(v: bool) -> void:
 	controls_disabled = v
 
@@ -212,38 +177,31 @@ func set_sucked_state(v: bool) -> void:
 	if v:
 		gravity = 0.0
 		velocity = Vector3.ZERO
-		
+
 func _apply_floor_tuning() -> void:
 	motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
 	up_direction = Vector3.UP
-
-	# สำคัญ 2 ตัวนี้
-	floor_snap_length = floor_snap_len                       # <<< ดูดติดพื้น/แท่น
-	floor_max_angle = deg_to_rad(floor_angle_deg)            # <<< มุมสูงสุดที่ยังนับว่าเป็นพื้น
-
-	# ช่วยเรื่องไถลบนพื้นเอียง
+	floor_snap_length = floor_snap_len
+	floor_max_angle = deg_to_rad(floor_angle_deg)
 	floor_stop_on_slope = true
 	floor_constant_speed = true
-
-	# สำคัญสำหรับแท่นที่เคลื่อนที่
 	platform_on_leave = CharacterBody3D.PLATFORM_ON_LEAVE_ADD_VELOCITY
 
-	# ให้ชนเฉพาะเลเยอร์แท่น (ถ้าจำแนก)
-	# platform_floor_layers = 1 << <layer_index_of_platform>
-	
+# ---- Moving platform (displacement-carry แบบแข็ง) -------------------
 func _apply_platform_displacement_pre() -> void:
-	var plat := _get_floor_platform()
-	if plat == null: return
-
+	if _attached_platform == null:
+		return
 	var disp := Vector3.ZERO
-	if plat.has_method("get_frame_displacement"):
-		disp = plat.get_frame_displacement()
-	elif "last_displacement" in plat:
-		disp = plat.last_displacement
-
-	# บวกเฉพาะแนวนอน เพื่อไม่กระทบการกระโดด
+	if _attached_platform.has_method("get_frame_displacement"):
+		disp = _attached_platform.get_frame_displacement()
+	elif "last_displacement" in _attached_platform:
+		disp = _attached_platform.last_displacement
 	if disp != Vector3.ZERO:
-		global_position += Vector3(disp.x, 0.0, disp.z)
+		global_position += Vector3(disp.x, 0.0, disp.z)  # เฉพาะ XZ
+
+func _update_attached_platform() -> void:
+	# เรียกหลัง move_and_slide(): เก็บแพลตฟอร์มที่ยืนอยู่ไว้ใช้เฟรมถัดไป
+	_attached_platform = _get_floor_platform()
 
 func _get_floor_platform() -> Node3D:
 	for i in range(get_slide_collision_count()):
@@ -253,3 +211,14 @@ func _get_floor_platform() -> Node3D:
 			if n is Node3D and n.is_in_group("MovingPlatform"):
 				return n
 	return null
+
+func add_coins(amount: int = 1) -> void:
+	coins += amount
+	coin_collected.emit(coins)
+	# ถ้ามีเสียงเก็บเหรียญ:
+	if Engine.has_singleton("Audio"):
+		Audio.play("res://sounds/coin.ogg")
+
+# รองรับโค้ดเก่า/โค้ดอื่นที่ยังเรียก collect_coin()
+func collect_coin(amount: int = 1) -> void:
+	add_coins(amount)
