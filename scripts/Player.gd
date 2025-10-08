@@ -13,6 +13,11 @@ signal coin_collected
 @export var sprint_multiplier: float = 1.5
 var is_sprinting := false
 
+@export var footstep_interval_walk: float = 0.42
+@export var footstep_interval_run: float = 0.30
+@export var footstep_min_interval: float = 0.18
+var _footstep_timer: float = 0.0
+
 var rotation_direction: float
 var gravity: float = 0.0
 var is_being_sucked := false
@@ -110,7 +115,8 @@ func _physics_process(delta: float) -> void:
 # ---- Effects / Anim -------------------------------------------------
 func handle_effects(_delta: float) -> void:
 	particles_trail.emitting = false
-	sound_footsteps.stream_paused = true
+	# ลบการ pause/unpause ออก เพื่อไม่ให้เว็บรีสตาร์ทเสียงทุกเฟรม
+	# sound_footsteps.stream_paused = true  # << เอาออก
 
 	if is_on_floor():
 		var horizontal_velocity: Vector2 = Vector2(velocity.x, velocity.z)
@@ -124,9 +130,6 @@ func handle_effects(_delta: float) -> void:
 			else:
 				if animation.current_animation != "walk": animation.play("walk", 0.1)
 
-			if speed_factor > 0.3:
-				sound_footsteps.stream_paused = false
-				sound_footsteps.pitch_scale = speed_factor
 			if speed_factor > 0.75:
 				particles_trail.emitting = true
 		else:
@@ -137,6 +140,9 @@ func handle_effects(_delta: float) -> void:
 			animation.speed_scale = clampf(speed_factor, 0.6, 1.6)
 		else:
 			animation.speed_scale = 1.0
+
+		# เล่นเสียงฝีเท้าแบบ one-shot ตามจังหวะ
+		_update_footsteps(_delta, speed_len)
 	elif animation.current_animation != "jump":
 		animation.play("jump", 0.1)
 
@@ -222,3 +228,27 @@ func add_coins(amount: int = 1) -> void:
 # รองรับโค้ดเก่า/โค้ดอื่นที่ยังเรียก collect_coin()
 func collect_coin(amount: int = 1) -> void:
 	add_coins(amount)
+	
+func _update_footsteps(delta: float, speed_len: float) -> void:
+	# ไม่อยู่พื้น/โดนล็อกคอนโทรล/ช้ามาก → ไม่ยิงเสียง
+	if not is_on_floor() or controls_disabled or speed_len < 0.2:
+		_footstep_timer = 0.0
+		return
+
+	# เลือกช่วงตามโหมดเดิน/วิ่ง แล้วปรับตามความเร็วจริงเล็กน้อย
+	var base_interval: float = (footstep_interval_run if is_sprinting else footstep_interval_walk)
+	var current_speed_local: float = movement_speed * (sprint_multiplier if is_sprinting else 1.0)
+	var speed_ratio: float = speed_len / maxf(0.001, current_speed_local)
+	var interval: float = maxf(footstep_min_interval, base_interval * (1.0 - 0.25 * (speed_ratio - 1.0)))
+
+	# เคาท์ดาวน์จังหวะ
+	_footstep_timer -= delta
+	if _footstep_timer > 0.0:
+		return
+
+	# one-shot พร้อมสุ่ม pitch เล็กน้อยให้ไม่ซ้ำกัน
+	var pitch: float = clampf(1.0 + (randf() * 0.10 - 0.05), 0.85, 1.3)
+	sound_footsteps.pitch_scale = pitch
+	sound_footsteps.play()
+
+	_footstep_timer = interval
