@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfh5rbrtemvyi"]
+
+[ext_resource type="Texture2D" uid="uid://bm1mibbw53xsj" path="res://asset/Menu.png" id="1_vjb58"]
+[ext_resource type="FontFile" uid="uid://d0cxd77jybrcn" path="res://fonts/lilita_one_regular.ttf" id="2_con2f"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Menu" type="Sprite2D" parent="."]
+position = Vector2(649, 362)
+texture = ExtResource("1_vjb58")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 325.0
+offset_top = 131.0
+offset_right = 965.0
+offset_bottom = 201.0
+theme_override_fonts/font = ExtResource("2_con2f")
+theme_override_font_sizes/font_size = 60
+text = "THE MOCK ADVENTURER"
+
+[node name="StartButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 583.0
+offset_top = 300.0
+offset_right = 695.0
+offset_bottom = 357.0
+theme_override_font_sizes/font_size = 35
+text = "START"
+
+[node name="ExitButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 597.0
+offset_top = 377.0
+offset_right = 677.0
+offset_bottom = 434.0
+theme_override_font_sizes/font_size = 35
+text = "EXIT"
