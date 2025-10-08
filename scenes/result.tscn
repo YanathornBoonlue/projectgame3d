@@ -1,34 +1,24 @@
 [gd_scene load_steps=3 format=3 uid="uid://dyrr8l7f1lak"]
 
-[ext_resource type="Texture2D" uid="uid://b1ggh5juv4ecf" path="res://asset/vecteezy_underwater-ocean-background-black-silhouettes-swimming-sea_8570732-1.jpg" id="1_aqgun"]
 [ext_resource type="Script" uid="uid://dylwfl358ldxy" path="res://scripts/result.gd" id="1_gd8ac"]
+[ext_resource type="Texture2D" uid="uid://cbv87xwremags" path="res://asset/Fish Victory.png" id="2_gd8ac"]
 
 [node name="Result" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_gd8ac")
 
-[node name="VecteezyUnderwater-ocean-background-black-silhouettes-swimming-sea8570732-1" type="Sprite2D" parent="."]
-position = Vector2(685, 350)
-scale = Vector2(0.808333, 0.800893)
-texture = ExtResource("1_aqgun")
+[node name="FishVictory" type="Sprite2D" parent="."]
+position = Vector2(642, 361)
+texture = ExtResource("2_gd8ac")
 
 [node name="RetryButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 630.0
-offset_top = 410.0
-offset_right = 746.0
-offset_bottom = 476.0
+offset_left = 572.0
+offset_top = 438.0
+offset_right = 688.0
+offset_bottom = 504.0
 theme_override_font_sizes/font_size = 42
 text = "Retry"
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 587.0
-offset_top = 188.0
-offset_right = 807.0
-offset_bottom = 271.0
-theme_override_font_sizes/font_size = 60
-text = "Finish!!!"
 
 [connection signal="pressed" from="RetryButton" to="." method="_on_retry_pressed"]
