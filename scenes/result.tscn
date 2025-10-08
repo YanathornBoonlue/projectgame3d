@@ -3,16 +3,22 @@
 [ext_resource type="Script" uid="uid://dylwfl358ldxy" path="res://scripts/result.gd" id="1_gd8ac"]
 [ext_resource type="Texture2D" uid="uid://cbv87xwremags" path="res://asset/Fish Victory.png" id="2_gd8ac"]
 
-[node name="Result" type="Control"]
+[node name="Result" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+stretch_mode = 5
+
+[node name="Result" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
+scale = Vector2(1.155, 1.155)
 script = ExtResource("1_gd8ac")
 
-[node name="FishVictory" type="Sprite2D" parent="."]
+[node name="FishVictory" type="Sprite2D" parent="Result"]
 position = Vector2(642, 361)
 texture = ExtResource("2_gd8ac")
 
-[node name="RetryButton" type="Button" parent="."]
+[node name="RetryButton" type="Button" parent="Result"]
 layout_mode = 0
 offset_left = 572.0
 offset_top = 438.0
@@ -21,4 +27,4 @@ offset_bottom = 504.0
 theme_override_font_sizes/font_size = 42
 text = "Retry"
 
-[connection signal="pressed" from="RetryButton" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="Result/RetryButton" to="Result" method="_on_retry_pressed"]

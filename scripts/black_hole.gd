@@ -7,6 +7,11 @@ extends Area3D
 @export var max_pull_speed := 45.0      # ความเร็วดูดสูงสุด (m/s)
 @export var kill_distance := 0.7
 @export var life_time := 8.0
+
+@export var over_texture: Texture2D        # ตั้งเป็น res://ui/over.png
+@export var over_sound: AudioStream        # ตั้งเป็น res://sounds/time_over.ogg (หรือไฟล์เสียงของคุณ)
+@export var over_duration: float = 4.5     # แสดงกี่วินาที
+
 var _sucking := false
 
 var _player: CharacterBody3D
@@ -46,6 +51,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _consume_player() -> void:
+	_show_time_over() 
 	if GameManager.has_method("set_checkpoint"):
 		GameManager.set_checkpoint(GameManager.start_position, GameManager.REASON_TIMEOUT)
 	if _player:
@@ -57,3 +63,43 @@ func _exit_tree() -> void:
 	# เผื่อเคสหลุมดำหายไปกลางคัน ให้คืนคอนโทรลผู้เล่น
 	if _sucking and _player and _player.is_inside_tree():
 		_player.call_deferred("set_sucked_state", false)
+		
+func _show_time_over() -> void:
+	var root := get_tree().current_scene
+	if root == null:
+		return
+
+	# ชั้น UI บนสุด
+	var layer := CanvasLayer.new()
+	layer.layer = 128  # ให้ชัวร์ว่าอยู่บนสุด
+	layer.process_mode = Node.PROCESS_MODE_ALWAYS  # ทำงานแม้เกมหยุดชั่วคราว
+	root.add_child(layer)
+
+	# ภาพ over.png กลางจอ
+	var img := TextureRect.new()
+	img.name = "TimeOverImage"
+	img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	img.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+	img.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	img.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	img.anchor_left = 0.0; img.anchor_top = 0.0
+	img.anchor_right = 1.0; img.anchor_bottom = 1.0
+	img.offset_left = 0; img.offset_top = 0; img.offset_right = 0; img.offset_bottom = 0
+	img.modulate = Color(1, 1, 1, 1)
+	img.texture = over_texture
+	layer.add_child(img)
+
+	# เล่นเสียง (ถ้ามีไฟล์)
+	if over_sound:
+		var sfx := AudioStreamPlayer.new() # ใช้ 2D ก็ได้ แต่ 3D ไม่จำเป็นกับ UI
+		sfx.stream = over_sound
+		sfx.volume_db = 0.0
+		layer.add_child(sfx)
+		sfx.play()
+
+	# ตั้งเวลา 3 วิ แล้วลบทิ้งเอง
+	var t := get_tree().create_timer(over_duration)
+	t.timeout.connect(func():
+		if is_instance_valid(layer):
+			layer.queue_free()
+	)

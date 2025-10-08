@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://85ldumyetgou" path="res://objects/brick.tscn" id="12_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://b3rocf0j1var0" path="res://models/Turtle.glb" id="12_muem4"]
 [ext_resource type="PackedScene" uid="uid://dy017k58p20sk" path="res://objects/cloud.tscn" id="13_drtpy"]
-[ext_resource type="PackedScene" uid="uid://bwepp3f361roc" path="res://objects/flag.tscn" id="13_muem4"]
+[ext_resource type="PackedScene" uid="uid://bwepp3f361roc" path="res://objects/door.tscn" id="13_muem4"]
 [ext_resource type="PackedScene" uid="uid://cghqdcercbu3r" path="res://objects/moving_platform.tscn" id="16_pm3ni"]
 [ext_resource type="Texture2D" uid="uid://dmxfhm10tse1q" path="res://sprites/kapun.png" id="17_jscy8"]
 [ext_resource type="LabelSettings" uid="uid://dfbgphmit8k3w" path="res://scenes/main.tres" id="17_yc10j"]
@@ -184,7 +184,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.7564, 2.85817, -5.79581)
 [node name="platform-grass-large-round2" parent="World" instance=ExtResource("8_4oh1e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.3105, 1, 2.83196)
 
-[node name="flag" parent="World" instance=ExtResource("13_muem4")]
+[node name="Door" parent="World" instance=ExtResource("13_muem4")]
 transform = Transform3D(0.030713, 0, -0.999528, 0, 1, 0, 0.999528, 0, 0.030713, 36.1659, 3.41861, -6.03575)
 
 [node name="coin" parent="World" instance=ExtResource("10_fwhys")]

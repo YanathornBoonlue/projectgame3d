@@ -10,11 +10,11 @@ var _from: Vector3
 var _to: Vector3
 var _last_pos: Vector3
 var _tween: Tween
-
-var last_displacement: Vector3 = Vector3.ZERO   # <<< ระยะที่แท่นขยับในเฟรมล่าสุด
+var last_displacement: Vector3 = Vector3.ZERO  # << สำคัญ
 
 func _ready() -> void:
 	add_to_group("MovingPlatform")
+	process_priority = -10                      # <<< ให้แพลตฟอร์มอัปเดตก่อน Player
 	_from = a.global_position
 	_to   = b.global_position
 	global_position = _from
@@ -22,20 +22,19 @@ func _ready() -> void:
 	_start_tween()
 
 func _start_tween() -> void:
-	var dist: float = _from.distance_to(_to)
-	var travel: float = max(0.001, dist / speed)
-	_tween = create_tween()
-	_tween.set_loops()
+	var dist := _from.distance_to(_to)
+	var travel: float = maxf(0.001, dist / speed)
+	_tween = create_tween().set_loops()
 	_tween.tween_interval(wait_at_ends)
 	_tween.tween_property(self, "global_position", _to, travel).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	_tween.tween_interval(wait_at_ends)
 	_tween.tween_property(self, "global_position", _from, travel).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 func _physics_process(delta: float) -> void:
-	var new_pos := global_position
-	var v: Vector3 = (global_position - _last_pos) / max(delta, 0.000001)
-	constant_linear_velocity = v
-	_last_pos = global_position
+	var now := global_position
+	last_displacement = now - _last_pos
+	constant_linear_velocity = last_displacement / max(delta, 0.000001)
+	_last_pos = now
 
-func get_frame_displacement() -> Vector3:     # ให้ Player เรียกใช้
+func get_frame_displacement() -> Vector3:
 	return last_displacement

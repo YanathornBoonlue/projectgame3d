@@ -1,23 +1,33 @@
-[gd_scene load_steps=4 format=3 uid="uid://cfh5rbrtemvyi"]
+[gd_scene load_steps=4 format=3 uid="uid://coe3l4a7ugoc1"]
 
 [ext_resource type="Script" uid="uid://p76fqcu06bc0" path="res://scripts/menu.gd" id="1_con2f"]
 [ext_resource type="Texture2D" uid="uid://bm1mibbw53xsj" path="res://asset/Menu.png" id="1_vjb58"]
 [ext_resource type="FontFile" uid="uid://d0cxd77jybrcn" path="res://fonts/lilita_one_regular.ttf" id="2_con2f"]
 
-[node name="Menu" type="Control"]
-layout_mode = 3
+[node name="Menu" type="TextureRect"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+stretch_mode = 5
+
+[node name="Menu" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.15, 1.15)
+size_flags_horizontal = 4
 script = ExtResource("1_con2f")
 
-[node name="Menu" type="Sprite2D" parent="."]
+[node name="Menu" type="Sprite2D" parent="Menu"]
 position = Vector2(649, 362)
 texture = ExtResource("1_vjb58")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="Menu"]
 layout_mode = 0
 offset_left = 325.0
 offset_top = 131.0
@@ -27,7 +37,7 @@ theme_override_fonts/font = ExtResource("2_con2f")
 theme_override_font_sizes/font_size = 60
 text = "THE MOCK ADVENTURER"
 
-[node name="StartButton" type="Button" parent="."]
+[node name="StartButton" type="Button" parent="Menu"]
 layout_mode = 0
 offset_left = 583.0
 offset_top = 300.0
@@ -36,7 +46,7 @@ offset_bottom = 357.0
 theme_override_font_sizes/font_size = 35
 text = "START"
 
-[node name="ExitButton" type="Button" parent="."]
+[node name="ExitButton" type="Button" parent="Menu"]
 layout_mode = 0
 offset_left = 597.0
 offset_top = 377.0
@@ -45,5 +55,5 @@ offset_bottom = 434.0
 theme_override_font_sizes/font_size = 35
 text = "EXIT"
 
-[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="Menu/StartButton" to="Menu" method="_on_start_button_pressed"]
+[connection signal="pressed" from="Menu/ExitButton" to="Menu" method="_on_exit_button_pressed"]

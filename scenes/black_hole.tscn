@@ -1,7 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://d0yfyduubda02"]
+[gd_scene load_steps=22 format=3 uid="uid://d0yfyduubda02"]
 
 [ext_resource type="Script" uid="uid://bgkpwlt55txat" path="res://scripts/black_hole.gd" id="1_fhwcw"]
 [ext_resource type="Texture2D" uid="uid://8ggihh27mlrr" path="res://sprites/blob_shadow.png" id="2_ic33f"]
+[ext_resource type="Texture2D" uid="uid://c4apxi7usv0xg" path="res://sprites/over.png" id="2_nrqlr"]
+[ext_resource type="AudioStream" uid="uid://ceuy44a1gu26v" path="res://sounds/gameover.ogg" id="3_yjpat"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_fhwcw"]
 radius = 2.5
@@ -108,6 +110,8 @@ material = SubResource("StandardMaterial3D_ic33f")
 
 [node name="BlackHole" type="Area3D"]
 script = ExtResource("1_fhwcw")
+over_texture = ExtResource("2_nrqlr")
+over_sound = ExtResource("3_yjpat")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_fhwcw")
