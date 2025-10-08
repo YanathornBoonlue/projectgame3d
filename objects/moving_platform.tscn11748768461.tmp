@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://cghqdcercbu3r"]
+
+[ext_resource type="Script" uid="uid://bl6rxpufurebv" path="res://objects/moving_platform.gd" id="1_isb40"]
+[ext_resource type="PackedScene" uid="uid://dot5iglagagpo" path="res://models/Liferaft made of planks.glb" id="1_kyp7m"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_isb40"]
+size = Vector3(8.81549, 0.432983, 6.64154)
+
+[node name="MovingPlatform" type="AnimatableBody3D" groups=["MovingPlatform"]]
+transform = Transform3D(0.625, 0, 0, 0, 0.625, 0, 0, 0, 0.625, 0, 0, 0)
+script = ExtResource("1_isb40")
+speed = 2.0
+
+[node name="Liferaft made of planks" parent="." instance=ExtResource("1_kyp7m")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.624991, 0.00272423, 0.00179826, -0.0027338, 0.624985, 0.00333402, -0.00178369, -0.00334184, 0.624989, 0.1139, -0.000329954, -0.0851108)
+shape = SubResource("BoxShape3D_isb40")
+
+[node name="PointA" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11)
+
+[node name="PointB" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
