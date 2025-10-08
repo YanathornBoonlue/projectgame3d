@@ -7,9 +7,11 @@ signal coin_collected
 
 @export var fall_kill_y: float = -20.0  # ตกเกินนี้ให้ตาย/เกิดใหม่
 @export_subgroup("Properties")
-@export var movement_speed = 250
+@export var movement_speed = 5
 @export var jump_strength = 7
 
+var _attached_platform: Node3D = null
+var _plat_prev_xform: Transform3D
 var movement_velocity: Vector3
 var rotation_direction: float
 var gravity = 0
@@ -26,6 +28,8 @@ var coins = 0
 @onready var model = $Fish
 @onready var animation = $Fish/AnimationPlayer
 
+@export_range(0.0, 2.0, 0.01) var floor_snap_len: float = 0.01  # 0.25–0.5 กำลังดี
+@export_range(0.0, 89.0, 0.1) var floor_angle_deg: float = 46.0
 
 func _ready() -> void:
 	add_to_group("Player")
@@ -38,7 +42,7 @@ func _ready() -> void:
 	controls_disabled = false      # <<< เปิดคอนโทรลกลับ
 
 	call_deferred("_do_respawn") 
-
+	_apply_floor_tuning()
 # Functions
 
 func _physics_process(delta):
@@ -52,14 +56,34 @@ func _physics_process(delta):
 
 	# Movement
 
-	var applied_velocity: Vector3
+	var input_dir := Vector3.ZERO
+	input_dir.x = Input.get_axis("move_left", "move_right")
+	input_dir.z = Input.get_axis("move_forward", "move_back")
+	input_dir = input_dir.rotated(Vector3.UP, view.rotation.y)
+	if input_dir.length() > 1.0:
+		input_dir = input_dir.normalized()
 
-	applied_velocity = velocity.lerp(movement_velocity, delta * 10)
-	applied_velocity.y = -gravity
+	# 2.3 ความเร็วที่ผู้เล่นอยากไป (m/s) — ไม่คูณ delta
+	var desired_h: Vector3 = input_dir * float(movement_speed)
 
-	velocity = applied_velocity
+	# 2.4 บนพื้น: จับคู่ความเร็วแท่นแบบ “ตรง ๆ” (ไม่ lerp) + ความเร็วผู้เล่น
+	#     กลางอากาศ: ไล่เข้าเป้าหมายอย่างนุ่ม
+	if is_on_floor():
+		velocity.x = desired_h.x
+		velocity.z = desired_h.z
+	else:
+		var rate: float = 3.0 * delta
+		var hv := Vector2(velocity.x, velocity.z).lerp(Vector2(desired_h.x, desired_h.z), rate)
+		velocity.x = hv.x
+		velocity.z = hv.y
+
+	# 2.5 แรงโน้มถ่วง (ของเดิม)
+	velocity.y = -gravity
+
 	move_and_slide()
-
+	# อัปเดต/แนบเข้ากับแท่น
+	_update_platform_attachment()
+	_apply_platform_attachment()
 	# Rotation
 
 	if Vector2(velocity.z, velocity.x).length() > 0:
@@ -94,7 +118,7 @@ func handle_effects(delta):
 
 	if is_on_floor():
 		var horizontal_velocity = Vector2(velocity.x, velocity.z)
-		var speed_factor = horizontal_velocity.length() / movement_speed / delta
+		var speed_factor = horizontal_velocity.length() / float(movement_speed) 
 		if speed_factor > 0.05:
 			if animation.current_animation != "walk":
 				animation.play("walk", 0.1)
@@ -121,21 +145,8 @@ func handle_effects(delta):
 
 func handle_controls(delta):
 	if controls_disabled:
-		movement_velocity = Vector3.ZERO
 		return
 	# Movement
-
-	var input := Vector3.ZERO
-
-	input.x = Input.get_axis("move_left", "move_right")
-	input.z = Input.get_axis("move_forward", "move_back")
-
-	input = input.rotated(Vector3.UP, view.rotation.y)
-
-	if input.length() > 1:
-		input = input.normalized()
-
-	movement_velocity = input * movement_speed * delta
 
 	# Jumping
 
@@ -204,3 +215,50 @@ func set_sucked_state(v: bool) -> void:
 	if v:
 		gravity = 0.0
 		velocity = Vector3.ZERO
+		
+func _apply_floor_tuning() -> void:
+	motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
+	up_direction = Vector3.UP
+
+	# สำคัญ 2 ตัวนี้
+	floor_snap_length = floor_snap_len                       # <<< ดูดติดพื้น/แท่น
+	floor_max_angle = deg_to_rad(floor_angle_deg)            # <<< มุมสูงสุดที่ยังนับว่าเป็นพื้น
+
+	# ช่วยเรื่องไถลบนพื้นเอียง
+	floor_stop_on_slope = true
+	floor_constant_speed = true
+
+	# สำคัญสำหรับแท่นที่เคลื่อนที่
+	platform_on_leave = CharacterBody3D.PLATFORM_ON_LEAVE_ADD_VELOCITY
+
+	# ให้ชนเฉพาะเลเยอร์แท่น (ถ้าจำแนก)
+	# platform_floor_layers = 1 << <layer_index_of_platform>
+
+func _update_platform_attachment() -> void:
+	# ตรวจพื้นที่ยืนอยู่ หาแพลตฟอร์มที่อยู่ในกลุ่ม "MovingPlatform"
+	var plat := _get_floor_platform()
+	if plat != null:
+		if _attached_platform != plat:
+			_attached_platform = plat
+			_plat_prev_xform = plat.global_transform
+	else:
+		_attached_platform = null  # หลุดพื้นก็ยกเลิกแนบ
+
+func _apply_platform_attachment() -> void:
+	if _attached_platform == null:
+		return
+	# เอาทรานส์ฟอร์มที่แท่นเปลี่ยนไปในเฟรมนี้มาคูณกับผู้เล่น → ติดเป๊ะ
+	var curr := _attached_platform.global_transform
+	var delta_tf: Transform3D = _plat_prev_xform.affine_inverse() * curr
+	global_transform = delta_tf * global_transform
+	_plat_prev_xform = curr
+
+func _get_floor_platform() -> Node3D:
+	for i in range(get_slide_collision_count()):
+		var c := get_slide_collision(i)
+		# เฉพาะคอลลิชันที่เป็น "พื้น" (โนมัลชี้ขึ้น)
+		if c and c.get_normal().y > 0.55:
+			var n := c.get_collider()
+			if n is Node3D and n.is_in_group("MovingPlatform"):
+				return n
+	return null
