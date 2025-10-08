@@ -1,6 +1,6 @@
 [gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dfbgphmit8k3w"]
 
-[ext_resource type="FontFile" uid="uid://d0cxd77jybrcn" path="res://fonts/lilita_one_regular.ttf" id="1_5xdy8"]
+[ext_resource type="FontFile" uid="uid://btnedjmum6rrs" path="res://fonts/Knewave-Regular.ttf" id="1_5xdy8"]
 
 [resource]
 font = ExtResource("1_5xdy8")
