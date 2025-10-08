@@ -17,6 +17,7 @@ var gravity = 0
 var is_being_sucked := false
 var previously_floored = false
 
+
 var jump_single = true
 var jump_double = true
 var controls_disabled := false
@@ -179,9 +180,9 @@ func jump():
 
 # Collecting coins
 
-func collect_coin():
+func collect_coin(d):
 
-	coins += 1
+	coins += d
 
 	coin_collected.emit(coins)
 	

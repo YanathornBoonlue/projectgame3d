@@ -8,7 +8,7 @@ var grabbed := false
 func _on_body_entered(body):
 	if body.has_method("collect_coin") and !grabbed:
 		
-		body.collect_coin()
+		body.collect_coin(1)
 		
 		Audio.play("res://sounds/collecting-gems.ogg") # Play sound
 		

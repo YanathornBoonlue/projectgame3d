@@ -13,6 +13,7 @@ func _ready() -> void:
 
 func _on_bottom_hit(body: Node3D) -> void:
 	# ชื่อกลุ่มให้ตรงกับที่ใช้ใน Player (มักเป็น "Player")
+	body.collect_coin(5)
 	if not body.is_in_group("Player"):
 		return
 	explode()
