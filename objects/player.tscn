@@ -50,7 +50,7 @@ modulate = Color(1, 1, 1, 0.705882)
 normal_fade = 0.5
 
 [node name="ParticlesTrail" type="GPUParticles3D" parent="."]
-physics_interpolation_mode = 2
+physics_interpolation_mode = 1
 material_override = SubResource("StandardMaterial3D_q7stj")
 cast_shadow = 0
 amount = 60

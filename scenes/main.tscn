@@ -28,16 +28,19 @@
 shader = ExtResource("3_jscy8")
 shader_parameter/top_color = Color(0.447859, 0.573792, 0.7493, 1)
 shader_parameter/horizon_color = Color(0.878185, 0.929165, 0.485215, 1)
-shader_parameter/sun_dir = Vector3(0, 0.8, 0.6)
+shader_parameter/horizon_height = 0.175
+shader_parameter/horizon_softness = 0.18
+shader_parameter/horizon_gamma = 1.0
+shader_parameter/sun_dir = Vector3(0, 0.085, 0.6)
 shader_parameter/sun_color = Color(1, 0.95, 0.85, 1)
 shader_parameter/sun_size = 0.996
 shader_parameter/sun_glow_size = 0.985
 shader_parameter/sun_intensity = 1.2
-shader_parameter/cloud_scale = 2.5
+shader_parameter/cloud_scale = 21.35
 shader_parameter/cloud_coverage = 0.55
-shader_parameter/cloud_speed = 0.02
+shader_parameter/cloud_speed = 0.01
 shader_parameter/cloud_color = Color(1, 1, 1, 1)
-shader_parameter/cloud_intensity = 0.25
+shader_parameter/cloud_intensity = 0.53
 
 [sub_resource type="Sky" id="Sky_y6deb"]
 sky_material = SubResource("ShaderMaterial_pm3ni")
