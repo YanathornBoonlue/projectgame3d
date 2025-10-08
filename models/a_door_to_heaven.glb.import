@@ -3,20 +3,20 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dtjvjdjl8cs6e"
-path="res://.godot/imported/flag.glb-0b6fa3c4b5180c1221a26057702dcf53.scn"
+uid="uid://cc7vqr65w32vw"
+path="res://.godot/imported/a_door_to_heaven.glb-626a0a42c98d5d698582f80b0013ead6.scn"
 
 [deps]
 
-source_file="res://models/flag.glb"
-dest_files=["res://.godot/imported/flag.glb-0b6fa3c4b5180c1221a26057702dcf53.scn"]
+source_file="res://models/a_door_to_heaven.glb"
+dest_files=["res://.godot/imported/a_door_to_heaven.glb-626a0a42c98d5d698582f80b0013ead6.scn"]
 
 [params]
 
-nodes/root_type="Node3D"
-nodes/root_name="Scene Root"
+nodes/root_type=""
+nodes/root_name=""
 nodes/apply_root_scale=true
-nodes/root_scale=1.0
+nodes/root_scale=0.54
 nodes/import_as_skeleton_bones=false
 nodes/use_node_type_suffixes=true
 meshes/ensure_tangents=true
@@ -33,5 +33,5 @@ animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={}
-gltf/naming_version=0
+gltf/naming_version=1
 gltf/embedded_image_handling=1

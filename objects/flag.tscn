@@ -1,16 +1,19 @@
 [gd_scene load_steps=4 format=3 uid="uid://bwepp3f361roc"]
 
-[ext_resource type="PackedScene" uid="uid://dtjvjdjl8cs6e" path="res://models/flag.glb" id="1_vjerf"]
-[ext_resource type="Script" uid="uid://bkhwfov4qj3mk" path="res://objects/flag.gd" id="2_2iksx"]
+[ext_resource type="Script" uid="uid://bkhwfov4qj3mk" path="res://scripts/flag.gd" id="2_2iksx"]
+[ext_resource type="PackedScene" uid="uid://cc7vqr65w32vw" path="res://models/a_door_to_heaven.glb" id="2_r1rfj"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_vjerf"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_vukel"]
 size = Vector3(0.531372, 1.73816, 0.935669)
 
-[node name="flag" instance=ExtResource("1_vjerf")]
+[node name="flag" type="Node3D"]
 script = ExtResource("2_2iksx")
 
-[node name="Area3D" type="Area3D" parent="." index="1"]
+[node name="flag" parent="." instance=ExtResource("2_r1rfj")]
+transform = Transform3D(1.005, 0, 0, 0, 1.005, 0, 0, 0, 1.005, 2.08238, -0.0716749, 2.62461)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00323486, 0.36908, 0.157898)
-shape = SubResource("BoxShape3D_vjerf")
+shape = SubResource("BoxShape3D_vukel")
