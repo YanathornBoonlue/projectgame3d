@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://drcdpukgochey"]
+[gd_scene load_steps=5 format=3 uid="uid://bwepp3f361roc"]
 
 [ext_resource type="Script" uid="uid://bkhwfov4qj3mk" path="res://scripts/door.gd" id="2_2iksx"]
 [ext_resource type="PackedScene" uid="uid://cc7vqr65w32vw" path="res://models/a_door_to_heaven.glb" id="2_r1rfj"]

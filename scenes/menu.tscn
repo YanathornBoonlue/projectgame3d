@@ -29,29 +29,29 @@ texture = ExtResource("1_vjb58")
 
 [node name="Label" type="Label" parent="Menu"]
 layout_mode = 0
-offset_left = 284.348
-offset_top = 158.261
-offset_right = 924.348
-offset_bottom = 228.261
+offset_left = 325.0
+offset_top = 131.0
+offset_right = 965.0
+offset_bottom = 201.0
 theme_override_fonts/font = ExtResource("2_con2f")
 theme_override_font_sizes/font_size = 60
 text = "THE MOCK ADVENTURER"
 
 [node name="StartButton" type="Button" parent="Menu"]
 layout_mode = 0
-offset_left = 551.304
-offset_top = 296.522
-offset_right = 663.304
-offset_bottom = 353.522
+offset_left = 583.0
+offset_top = 300.0
+offset_right = 695.0
+offset_bottom = 357.0
 theme_override_font_sizes/font_size = 35
 text = "START"
 
 [node name="ExitButton" type="Button" parent="Menu"]
 layout_mode = 0
-offset_left = 566.957
-offset_top = 377.391
-offset_right = 646.957
-offset_bottom = 434.391
+offset_left = 597.0
+offset_top = 377.0
+offset_right = 677.0
+offset_bottom = 434.0
 theme_override_font_sizes/font_size = 35
 text = "EXIT"
 

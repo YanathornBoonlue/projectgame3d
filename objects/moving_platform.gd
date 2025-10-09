@@ -34,7 +34,8 @@ func _start_tween() -> void:
 func _physics_process(delta: float) -> void:
 	var now := global_position
 	last_displacement = now - _last_pos
-	constant_linear_velocity = last_displacement / max(delta, 0.000001)
+	var follow_factor: float = 0.0001  # 0.0 = ไม่ขยับตามเลย, 1.0 = ขยับตามเต็มที่
+	constant_linear_velocity = (last_displacement / max(delta, 0.000001)) * follow_factor
 	_last_pos = now
 
 func get_frame_displacement() -> Vector3:
