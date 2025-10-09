@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dejs551t3kxpn"]
 
-[ext_resource type="PackedScene" path="res://models/flag.glb" id="1_6j4e1"]
+[ext_resource type="PackedScene" path="res://models/flagpole_super_mario_bros.glb" id="1_6j4e1"]
 [ext_resource type="Script" uid="uid://dgi12rg6l8xw8" path="res://objects/ResultArea.gd" id="2_6j4e1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vjerf"]
