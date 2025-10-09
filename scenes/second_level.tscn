@@ -21,6 +21,9 @@
 shader = ExtResource("2_xpalr")
 shader_parameter/top_color = Color(0.447859, 0.573792, 0.7493, 1)
 shader_parameter/horizon_color = Color(0.878185, 0.929165, 0.485215, 1)
+shader_parameter/horizon_height = 0.0
+shader_parameter/horizon_softness = 0.18
+shader_parameter/horizon_gamma = 1.0
 shader_parameter/sun_dir = Vector3(0, 0.8, 0.6)
 shader_parameter/sun_color = Color(1, 0.95, 0.85, 1)
 shader_parameter/sun_size = 0.996
@@ -111,8 +114,15 @@ surface_material_override/0 = SubResource("ShaderMaterial_k4me4")
 
 [node name="Player" parent="." node_paths=PackedStringArray("view") instance=ExtResource("5_0vunq")]
 transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, -37.3149, 0.74791, 0.040434)
-fall_kill_y = -10.0
 view = NodePath("../View")
+fall_kill_y = -10.0
+movement_speed = 250.0
+sprint_speed = 420.0
+jump_strength = 7.0
+max_hp = 3
+invuln_duration = 0.6
+hit_stun_duration = 0.25
+knockback_force = 9.0
 
 [node name="View" type="Node3D" parent="." node_paths=PackedStringArray("target")]
 transform = Transform3D(0.707107, -0.298836, 0.640856, 0, 0.906308, 0.422618, -0.707107, -0.298836, 0.640856, 0, 0, 0)

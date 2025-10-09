@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Fish jump"
 config/tags=PackedStringArray("starterkit")
-run/main_scene="uid://coe3l4a7ugoc1"
+run/main_scene="uid://bqqgyqafm7xwp"
 config/features=PackedStringArray("4.4", "Forward Plus")
 boot_splash/bg_color=Color(0.92549, 0.92549, 0.960784, 1)
 boot_splash/image="uid://28p1xlgkdgyl"
