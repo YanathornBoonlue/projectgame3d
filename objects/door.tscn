@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://gvur6o0he8yu" path="res://sounds/yay_cRiHGGR.ogg" id="3_khffo"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vukel"]
-size = Vector3(0.531372, 1.73816, 0.935669)
+size = Vector3(0.14801, 1.88907, 0.935669)
 
 [node name="Door" type="Node3D"]
 script = ExtResource("2_2iksx")
@@ -16,7 +16,7 @@ transform = Transform3D(1.005, 0, 0, 0, 1.005, 0, 0, 0, 1.005, 2.08238, -0.07167
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00323486, 0.36908, 0.157898)
+transform = Transform3D(0.0420849, 0, -0.999114, 0, 1, 0, 0.999114, 0, 0.0420849, -0.0227042, 0.893473, -0.0336131)
 shape = SubResource("BoxShape3D_vukel")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
