@@ -25,6 +25,7 @@ func _start_tween() -> void:
 	var dist := _from.distance_to(_to)
 	var travel: float = maxf(0.001, dist / speed)
 	_tween = create_tween().set_loops()
+	_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	_tween.tween_interval(wait_at_ends)
 	_tween.tween_property(self, "global_position", _to, travel).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	_tween.tween_interval(wait_at_ends)

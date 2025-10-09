@@ -99,10 +99,11 @@ func _on_player_respawned() -> void:
 func _update_label() -> void:
 	if _label == null:
 		return
-
-	var m := int(_time_left) / 60
-	var s := int(_time_left) % 60
-	_label.text = "%02d:%02d" % [m, s]  # เพิ่มไอคอนเล็กน้อยให้ดูเด่น
+	
+	var remain: int = int(_time_left)
+	var m: int = int(remain / 60.0)     # แบ่งเป็น float แล้วแปลงเป็น int
+	var s: int = remain - m * 60
+	_label.text = "%02d:%02d" % [m, s]
 
 	# ขอบตัวอักษร
 	_label.add_theme_constant_override("outline_size", 6)

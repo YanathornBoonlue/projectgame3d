@@ -17,5 +17,5 @@ script = ExtResource("2_hugjq")
 visible = false
 surface_material_override/0 = SubResource("StandardMaterial3D_m5bs8")
 
-[node name="sea horse" parent="." index="1" instance=ExtResource("3_rv8y7")]
+[node name="seahorse" parent="." index="1" instance=ExtResource("3_rv8y7")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.357088, 0)

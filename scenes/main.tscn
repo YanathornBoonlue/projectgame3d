@@ -32,16 +32,19 @@
 shader = ExtResource("3_jscy8")
 shader_parameter/top_color = Color(0.447859, 0.573792, 0.7493, 1)
 shader_parameter/horizon_color = Color(0.878185, 0.929165, 0.485215, 1)
-shader_parameter/sun_dir = Vector3(0, 0.8, 0.6)
+shader_parameter/horizon_height = 0.175
+shader_parameter/horizon_softness = 0.18
+shader_parameter/horizon_gamma = 1.0
+shader_parameter/sun_dir = Vector3(0, 0.085, 0.6)
 shader_parameter/sun_color = Color(1, 0.95, 0.85, 1)
 shader_parameter/sun_size = 0.996
 shader_parameter/sun_glow_size = 0.985
 shader_parameter/sun_intensity = 1.2
-shader_parameter/cloud_scale = 2.5
+shader_parameter/cloud_scale = 21.35
 shader_parameter/cloud_coverage = 0.55
-shader_parameter/cloud_speed = 0.02
+shader_parameter/cloud_speed = 0.01
 shader_parameter/cloud_color = Color(1, 1, 1, 1)
-shader_parameter/cloud_intensity = 0.25
+shader_parameter/cloud_intensity = 0.53
 
 [sub_resource type="Sky" id="Sky_y6deb"]
 sky_material = SubResource("ShaderMaterial_pm3ni")
@@ -141,7 +144,7 @@ transform = Transform3D(0.998991, 0, -0.0449274, 0, 1, 0, 0.0449274, 0, 0.998991
 transform = Transform3D(0.998991, 0, -0.0449274, 0, 1, 0, 0.0449274, 0, 0.998991, 13.7989, 3.08249, -8.00177)
 
 [node name="platform-medium3" parent="World" instance=ExtResource("7_ixpj3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.1079, 1.40019, -7.20877)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.997, 1.40019, -8.91388)
 
 [node name="platform-medium4" parent="World" instance=ExtResource("7_ixpj3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -6)
@@ -177,7 +180,7 @@ transform = Transform3D(0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, 10
 transform = Transform3D(0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, 21.5521, 3.04104, -5.97502)
 
 [node name="platform-grass-large-round" parent="World" instance=ExtResource("8_4oh1e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2218, 1, -9.94912)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.8769, 1.9328, -13.1148)
 
 [node name="platform-grass-large-round3" parent="World" instance=ExtResource("8_4oh1e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.7564, 2.85817, -5.79581)
@@ -200,10 +203,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.64807, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.21788, 0.635, 4)
 
 [node name="coin2" parent="World" instance=ExtResource("10_fwhys")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2655, 1.97005, -9.16805)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.9206, 2.90285, -12.3337)
 
 [node name="coin3" parent="World" instance=ExtResource("10_fwhys")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2655, 1.97005, -9.96271)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.9206, 2.90285, -13.1284)
 
 [node name="coin5" parent="World" instance=ExtResource("10_fwhys")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.0538, 0.464435, 3.91952)
@@ -221,16 +224,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.986, 0.518295, 3.99354)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0795909, 3.9794, -5.83243)
 
 [node name="coin4" parent="World" instance=ExtResource("10_fwhys")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2655, 1.97005, -10.8096)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.9206, 2.90285, -13.9753)
 
 [node name="coin12" parent="World" instance=ExtResource("10_fwhys")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.979, 1.97018, 2.47228)
 
 [node name="coin21" parent="World" instance=ExtResource("10_fwhys")]
-transform = Transform3D(0.996645, 0.0818515, 0, -0.0818515, 0.996645, 0, 0, 0, 1, -15.7095, 2.10401, -7.15681)
+transform = Transform3D(0.996645, 0.0818515, 0, -0.0818515, 0.996645, 0, 0, 0, 1, -14.5986, 2.10401, -8.86192)
 
 [node name="coin22" parent="World" instance=ExtResource("10_fwhys")]
-transform = Transform3D(0.996645, 0.0818515, 0, -0.0818515, 0.996645, 0, 0, 0, 1, -4.24655, 3.38617, -6.63708)
+transform = Transform3D(0.996645, 0.0818515, 0, -0.0818515, 0.996645, 0, 0, 0, 1, -3.55172, 3.44262, -5.48652)
 
 [node name="coin13" parent="World" instance=ExtResource("10_fwhys")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.8074, 1.96715, 3.33288)
@@ -326,10 +329,10 @@ transform = Transform3D(0.99316, -0.116757, 0, 0.116757, 0.99316, 0, 0, 0, 1, 21
 transform = Transform3D(0.99316, -0.116757, 0, 0.116757, 0.99316, 0, 0, 0, 1, -10.3395, 1.03316, 3.95995)
 
 [node name="brick7" parent="World" instance=ExtResource("12_jkv2x")]
-transform = Transform3D(0.99316, -0.116757, 0, 0.116757, 0.99316, 0, 0, 0, 1, -12.6679, 2.30913, -9.54323)
+transform = Transform3D(0.99316, -0.116757, 0, 0.116757, 0.99316, 0, 0, 0, 1, -12.323, 3.24193, -12.7089)
 
 [node name="brick2" parent="World" instance=ExtResource("12_jkv2x")]
-transform = Transform3D(0.855265, 0, -0.518191, 0, 1, 0, 0.518191, 0, 0.855265, -10.0131, 2.39867, -9.96869)
+transform = Transform3D(0.855265, 0, -0.518191, 0, 1, 0, 0.518191, 0, 0.855265, -9.6682, 3.33147, -13.1344)
 
 [node name="brick4" parent="World" instance=ExtResource("12_jkv2x")]
 transform = Transform3D(0.855265, 0, -0.518191, 0, 1, 0, 0.518191, 0, 0.855265, -28.9018, 1.266, -0.777231)
@@ -341,7 +344,7 @@ transform = Transform3D(0.855265, 0, -0.518191, 0, 1, 0, 0.518191, 0, 0.855265, 
 transform = Transform3D(0.939082, 0, 0.343692, 0, 1, 0, -0.343692, 0, 0.939082, -19.034, 3.21501, 2.86945)
 
 [node name="FlagCheckpoint" parent="World" instance=ExtResource("18_dp3eg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.93381, 3.73026, -5.34452)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.93381, 3.73026, -4.98708)
 
 [node name="FlagCheckpoint2" parent="World" instance=ExtResource("18_dp3eg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.5708, 1.67527, 2.17644)

@@ -3,97 +3,84 @@ signal respawned
 signal coin_collected
 
 @export_subgroup("Components")
-@export var view: Node3D
+@export var view: Node3D                         # โหนดหมุนมุมกล้อง (เช่น View/CameraPivot)
 
-@export var fall_kill_y: float = -20.0  # ตกเกินนี้ให้ตาย/เกิดใหม่
-@export_subgroup("Properties")
-<<<<<<< Updated upstream
-@export var movement_speed = 5
-@export var jump_strength = 7
-=======
-@export var movement_speed: float = 250.0   # ความเร็วเดินปกติ
-@export var sprint_speed: float = 420.0     # ความเร็วตอนกดวิ่ง (SPRINT)
+@export var fall_kill_y: float = -20.0           # ตกเกินนี้ให้ตาย/เกิดใหม่
+@export_subgroup("Movement")
+@export var movement_speed: float = 250.0        # เดินปกติ (หน่วย: u/s)
+@export var sprint_speed: float = 420.0          # วิ่งเร็ว (ต้องมี action: "sprint")
 @export var jump_strength: float = 7.0
 
-# --- Combat ---
 @export_subgroup("Combat")
-@export var max_hp: int = 3
-@export var invuln_duration: float = 0.6     # เวลาฟื้นตัว/ไร้เทียมทาน
-@export var hit_stun_duration: float = 0.25  # เวลาชะงัก
-@export var knockback_force: float = 9.0     # แรงน็อคแบ็กพื้นฐาน
->>>>>>> Stashed changes
+@export var max_hp: int = 3                      # พลังชีวิตสูงสุด
+@export var invuln_duration: float = 0.6         # เวลาไร้เทียมทานหลังโดนตี
+@export var hit_stun_duration: float = 0.25      # เวลาชะงัก
+@export var knockback_force: float = 9.0         # แรงน็อคแบ็กพื้นฐาน
 
-var _attached_platform: Node3D = null
-var movement_velocity: Vector3
+@export_subgroup("Floor / Platforms")
+@export_range(0.0, 2.0, 0.01) var floor_snap_len: float = 0.25
+@export_range(0.0, 89.0, 0.1) var floor_angle_deg: float = 46.0
+
 var rotation_direction: float
-var gravity := 0.0
+var gravity: float = 0.0
 var is_being_sucked := false
 var previously_floored := false
 
-<<<<<<< Updated upstream
-
-var jump_single = true
-var jump_double = true
-=======
 var jump_single := true
 var jump_double := true
->>>>>>> Stashed changes
 var controls_disabled := false
 var coins := 0
 
 var hp: int
 var _invuln := false
 
-@onready var particles_trail = $ParticlesTrail
-@onready var sound_footsteps = $SoundFootsteps
-@onready var model = $Fish
-@onready var animation = $Fish/AnimationPlayer
+@onready var particles_trail: Node3D = $ParticlesTrail
+@onready var sound_footsteps: AudioStreamPlayer = $SoundFootsteps
+@onready var model: Node3D = $Fish
+@onready var animation: AnimationPlayer = $Fish/AnimationPlayer
 
-<<<<<<< Updated upstream
-@export_range(0.0, 2.0, 0.01) var floor_snap_len: float = 0.25  # 0.25–0.5 กำลังดี
-@export_range(0.0, 89.0, 0.1) var floor_angle_deg: float = 46.0
-
-=======
->>>>>>> Stashed changes
 func _ready() -> void:
 	add_to_group("Player")
-	coins = GameManager.coins   # ซิงก์ยอดจาก GameManager เมื่อเข้าเลเวลใหม่
-	GameManager.set_start(global_position)  # ส่งตำแหน่งเริ่ม
+
+	# เหรียญสะสมข้ามฉาก
+	if Engine.has_singleton("GameManager"):
+		coins = GameManager.coins
+		GameManager.set_start(global_position)
+
+	# Init movement/combat
 	velocity = Vector3.ZERO
 	gravity = 0.0
 	previously_floored = false
 	jump_single = true
 	jump_double = true
 	controls_disabled = false
-
-	# combat init
 	hp = max_hp
 	_invuln = false
 
-	call_deferred("_do_respawn") 
+	call_deferred("_do_respawn")
 	_apply_floor_tuning()
-# Functions
+
 func _physics_process(delta: float) -> void:
-	# Handle functions
-	handle_controls(delta)
-	handle_gravity(delta)
-	handle_effects(delta)
-
-	# Movement
-<<<<<<< Updated upstream
-
+	# ===== Movement (พร้อมแท่นเลื่อน) =====
 	var input_dir := Vector3.ZERO
 	input_dir.x = Input.get_axis("move_left", "move_right")
 	input_dir.z = Input.get_axis("move_forward", "move_back")
-	input_dir = input_dir.rotated(Vector3.UP, view.rotation.y)
+
+	# หมุนอินพุตตาม yaw ของ view ถ้ามี ไม่งั้นตามตัวเอง
+	var yaw := rotation.y
+	if is_instance_valid(view):
+		yaw = view.global_rotation.y
+	input_dir = input_dir.rotated(Vector3.UP, yaw)
 	if input_dir.length() > 1.0:
 		input_dir = input_dir.normalized()
 
-	# 2) บวก "ระยะที่แท่นขยับในเฟรมนี้" เข้าตำแหน่งผู้เล่น (เฉพาะ XZ) **ก่อน** move_and_slide()
+	# บวกการเคลื่อนที่ของแท่น (เฉพาะ XZ) ก่อนคำนวณฟิสิกส์
 	_apply_platform_displacement_pre()
 
-	# 3) ตั้งความเร็วแนวนอนของผู้เล่น
-	var desired_h: Vector3 = input_dir * float(movement_speed)
+	# ตั้งความเร็วแนวนอน (หน่วย u/s — ไม่คูณ delta)
+	var current_speed := sprint_speed if Input.is_action_pressed("sprint") else movement_speed
+	var desired_h: Vector3 = input_dir * current_speed
+
 	if is_on_floor():
 		velocity.x = desired_h.x
 		velocity.z = desired_h.z
@@ -103,49 +90,46 @@ func _physics_process(delta: float) -> void:
 		velocity.x = hv.x
 		velocity.z = hv.y
 
-	# 4) แรงโน้มถ่วงเดิม
+	# แรงโน้มถ่วง
 	velocity.y = -gravity
 
-=======
-	var applied_velocity: Vector3
-	applied_velocity = velocity.lerp(movement_velocity, delta * 10.0)
-	applied_velocity.y = -gravity
-	velocity = applied_velocity
->>>>>>> Stashed changes
 	move_and_slide()
-	# Rotation
+
+	# ===== Facing =====
 	if Vector2(velocity.z, velocity.x).length() > 0.0:
 		rotation_direction = Vector2(velocity.z, velocity.x).angle()
 	rotation.y = lerp_angle(rotation.y, rotation_direction, delta * 10.0)
 
-	# Falling/respawning
+	# ตกเหว
 	if not is_being_sucked and global_position.y < fall_kill_y:
-		respawn()
+		die()  # หรือ respawn() ถ้าต้องการ
 
-	# Animation for scale (jumping and landing)
-	model.scale = model.scale.lerp(Vector3(1, 1, 1), delta * 10.0)
+	# สเกลตอนขึ้น/ลงพื้น
+	model.scale = model.scale.lerp(Vector3.ONE, delta * 10.0)
 
-	# Animation when landing
+	# แตะพื้นแรง ๆ
 	if is_on_floor() and gravity > 2.0 and !previously_floored:
 		model.scale = Vector3(1.25, 0.75, 1.25)
 		Audio.play("res://sounds/land.ogg")
 	previously_floored = is_on_floor()
 
-# Handle animation(s)
+	# ===== sub-steppers =====
+	handle_gravity(delta)
+	handle_effects(delta)
+	handle_controls(delta)
+
+# ---------- FX / Animation ----------
 func handle_effects(delta: float) -> void:
 	particles_trail.emitting = false
 	sound_footsteps.stream_paused = true
 
 	if is_on_floor():
-<<<<<<< Updated upstream
-		var horizontal_velocity = Vector2(velocity.x, velocity.z)
-		var speed_factor = horizontal_velocity.length() / float(movement_speed) 
-=======
 		var horizontal_velocity := Vector2(velocity.x, velocity.z)
 		var current_speed := sprint_speed if Input.is_action_pressed("sprint") else movement_speed
-		var speed_factor := horizontal_velocity.length() / current_speed / delta
+		var speed_factor := 0.0
+		if current_speed > 0.0:
+			speed_factor = horizontal_velocity.length() / current_speed
 
->>>>>>> Stashed changes
 		if speed_factor > 0.05:
 			if animation.current_animation != "walk":
 				animation.play("walk", 0.1)
@@ -160,46 +144,21 @@ func handle_effects(delta: float) -> void:
 			animation.play("idle", 0.1)
 
 		if animation.current_animation == "walk":
-			animation.speed_scale = speed_factor
+			animation.speed_scale = max(speed_factor, 0.2)
 		else:
 			animation.speed_scale = 1.0
 	elif animation.current_animation != "jump":
 		animation.play("jump", 0.1)
 
-# Handle movement input
-func handle_controls(delta: float) -> void:
+# ---------- Input (เฉพาะกระโดด) ----------
+func handle_controls(_delta: float) -> void:
 	if controls_disabled:
 		return
-
-<<<<<<< Updated upstream
-=======
-	var input := Vector3.ZERO
-	input.x = Input.get_axis("move_left", "move_right")
-	input.z = Input.get_axis("move_forward", "move_back")
-
-	# Fallback: ถ้า view ไม่ได้ตั้ง ให้ใช้มุมของ Player เอง (กัน view == null)
-	var yaw := rotation.y
-	if is_instance_valid(view):
-		yaw = view.global_rotation.y
-	input = input.rotated(Vector3.UP, yaw)
-
-	if input.length() > 1.0:
-		input = input.normalized()
-
-	# --- SPRINT ---
-	var current_speed := movement_speed
-	if Input.is_action_pressed("sprint"):
-		current_speed = sprint_speed
-
-	movement_velocity = input * current_speed * delta
-
->>>>>>> Stashed changes
-	# Jumping
 	if Input.is_action_just_pressed("jump"):
 		if jump_single or jump_double:
 			jump()
 
-# Handle gravity
+# ---------- Gravity / Jump ----------
 func handle_gravity(delta: float) -> void:
 	if controls_disabled:
 		return
@@ -208,7 +167,6 @@ func handle_gravity(delta: float) -> void:
 		jump_single = true
 		gravity = 0.0
 
-# Jumping
 func jump() -> void:
 	Audio.play("res://sounds/jump.ogg")
 	gravity = -jump_strength
@@ -220,20 +178,15 @@ func jump() -> void:
 	else:
 		jump_double = false
 
-# Collecting coins
-<<<<<<< Updated upstream
-
-func collect_coin(d):
-
-	coins += d
-
-=======
+# ---------- Coins ----------
 func collect_coin() -> void:
-	coins = GameManager.add_coins(1)  # ได้ยอดรวมล่าสุดกลับมา
->>>>>>> Stashed changes
+	if Engine.has_singleton("GameManager"):
+		coins = GameManager.add_coins(1)  # ได้ยอดรวมล่าสุดกลับมา
+	else:
+		coins += 1
 	coin_collected.emit(coins)
 
-# === Combat: โดนตี / ตาย / ฟื้น ===
+# ---------- Combat ----------
 func hit(dir: Vector3, damage: int = 1, kb: float = -1.0) -> void:
 	if _invuln:
 		return
@@ -246,7 +199,7 @@ func hit(dir: Vector3, damage: int = 1, kb: float = -1.0) -> void:
 	_invuln = true
 	controls_disabled = true
 
-	# น็อคแบ็ก + ดีดขึ้นเล็กน้อย
+	# น็อคแบ็ก + เด้งขึ้นเล็กน้อย
 	var n := dir.normalized()
 	velocity.x = n.x * kb
 	velocity.z = n.z * kb
@@ -270,13 +223,15 @@ func hit(dir: Vector3, damage: int = 1, kb: float = -1.0) -> void:
 		die()
 
 func die() -> void:
-	# Audio.play("res://sounds/death.ogg")
-	respawn()
-	hp = max_hp
+	# ตายแล้วขึ้นหน้าผลลัพธ์ (แพ้)
+	if Engine.has_singleton("GameManager"):
+		GameManager.result_state = "defeat"
+	get_tree().change_scene_to_file("res://scenes/result.tscn")
 
 func heal(amount: int = 1) -> void:
 	hp = clamp(hp + amount, 0, max_hp)
 
+# ---------- Respawn ----------
 func respawn() -> void:
 	controls_disabled = false
 	is_being_sucked = false
@@ -288,42 +243,27 @@ func respawn() -> void:
 	call_deferred("_do_respawn")
 	
 func _do_respawn() -> void:
-	var p := GameManager.get_respawn_position()
+	var p := global_position
+	if Engine.has_singleton("GameManager") and "get_respawn_position" in GameManager:
+		p = GameManager.get_respawn_position()
 	# ดันขึ้นจากพื้นเล็กน้อยกันติด/ทะลุ
 	global_position = p + Vector3.UP * 0.2
 	respawned.emit()
 
-func set_controls_disabled(v: bool) -> void:
-	controls_disabled = v
-
-func set_sucked_state(v: bool) -> void:
-	is_being_sucked = v
-	controls_disabled = v
-	if v:
-		gravity = 0.0
-		velocity = Vector3.ZERO
-		
+# ---------- Platforms / Floor tuning ----------
 func _apply_floor_tuning() -> void:
 	motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
 	up_direction = Vector3.UP
-
-	# สำคัญ 2 ตัวนี้
-	floor_snap_length = floor_snap_len                       # <<< ดูดติดพื้น/แท่น
-	floor_max_angle = deg_to_rad(floor_angle_deg)            # <<< มุมสูงสุดที่ยังนับว่าเป็นพื้น
-
-	# ช่วยเรื่องไถลบนพื้นเอียง
+	floor_snap_length = floor_snap_len                 # ดูดติดพื้น/แท่น
+	floor_max_angle = deg_to_rad(floor_angle_deg)      # มุมสูงสุดที่ยังนับเป็นพื้น
 	floor_stop_on_slope = true
 	floor_constant_speed = true
-
-	# สำคัญสำหรับแท่นที่เคลื่อนที่
 	platform_on_leave = CharacterBody3D.PLATFORM_ON_LEAVE_ADD_VELOCITY
 
-	# ให้ชนเฉพาะเลเยอร์แท่น (ถ้าจำแนก)
-	# platform_floor_layers = 1 << <layer_index_of_platform>
-	
 func _apply_platform_displacement_pre() -> void:
 	var plat := _get_floor_platform()
-	if plat == null: return
+	if plat == null:
+		return
 
 	var disp := Vector3.ZERO
 	if plat.has_method("get_frame_displacement"):
@@ -331,7 +271,6 @@ func _apply_platform_displacement_pre() -> void:
 	elif "last_displacement" in plat:
 		disp = plat.last_displacement
 
-	# บวกเฉพาะแนวนอน เพื่อไม่กระทบการกระโดด
 	if disp != Vector3.ZERO:
 		global_position += Vector3(disp.x, 0.0, disp.z)
 
@@ -343,3 +282,14 @@ func _get_floor_platform() -> Node3D:
 			if n is Node3D and n.is_in_group("MovingPlatform"):
 				return n
 	return null
+
+# ---------- Misc ----------
+func set_controls_disabled(v: bool) -> void:
+	controls_disabled = v
+
+func set_sucked_state(v: bool) -> void:
+	is_being_sucked = v
+	controls_disabled = v
+	if v:
+		gravity = 0.0
+		velocity = Vector3.ZERO

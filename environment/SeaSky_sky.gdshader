@@ -3,6 +3,9 @@ shader_type sky;
 // สีท้องฟ้า
 uniform vec3 top_color      : source_color = vec3(0.35, 0.55, 0.95);
 uniform vec3 horizon_color  : source_color = vec3(0.80, 0.90, 1.00);
+uniform float horizon_height   : hint_range(-0.5, 0.5) = 0.00; // ตำแหน่งเส้นขอบฟ้า (y); ค่าติดลบ = ขอบฟ้าต่ำลง
+uniform float horizon_softness : hint_range(0.0, 0.6)  = 0.18; // ความฟุ้งของขอบ (ยิ่งน้อยยิ่งคม)
+uniform float horizon_gamma    : hint_range(0.2, 3.0)  = 1.0;  // รูปร่างโค้งการไล่สี (มากขึ้น = คมขึ้น)
 
 // ดวงอาทิตย์
 uniform vec3  sun_dir        = vec3(0.0, 0.8, 0.6); // ต้องเป็นเวกเตอร์หน่วย (ปรับทิศได้)
@@ -59,7 +62,10 @@ void sky(){
     );
 
     // ไล่สีบน-ขอบฟ้า
-    float t = smoothstep(-0.1, 0.8, dir.y);
+    float t = smoothstep(horizon_height - horizon_softness,
+                     horizon_height + horizon_softness,
+                     dir.y);
+	t = pow(t, horizon_gamma);
     vec3 col = mix(horizon_color, top_color, t);
 
     // ดวงอาทิตย์ + ฮาโล

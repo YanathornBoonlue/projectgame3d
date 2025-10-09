@@ -8,7 +8,7 @@ var random_velocity:float
 var random_time:float
 
 func _ready():
-	
+	$seahorse.physics_interpolation_mode = Node3D.PHYSICS_INTERPOLATION_MODE_OFF
 	random_velocity = random_number.randf_range(0.1, 2.0)
 	random_time = random_number.randf_range(0.1, 2.0)
 
