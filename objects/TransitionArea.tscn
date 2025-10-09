@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bwepp3f361roc"]
 
-[ext_resource type="PackedScene" path="res://models/flagpole_super_mario_bros.glb" id="1_vjerf"]
+[ext_resource type="PackedScene" path="res://models/flag.glb" id="1_vjerf"]
 [ext_resource type="Script" uid="uid://bkhwfov4qj3mk" path="res://objects/TransitionArea.gd" id="2_2iksx"]
 [ext_resource type="PackedScene" uid="uid://cur7r7vatfjc6" path="res://scenes/second_level.tscn" id="3_oymhg"]
 
