@@ -20,10 +20,9 @@
 
 
 
-เนื้อเรื่องย่อ :  
+เนื้อเรื่องย่อ :  Mockเป็นมนุษย์ปลาได้รับหน้าที่สำรวจโลกใบใหม่สำหรับการดำรงชีวิตของเผ่าพันธ์ุ โดย Mock ได้เดินทางมายังโลกใบนึงที่ลักษณะพิศวงทะเลมหาสมุทรเเห่งนี้ เป็นอันตรายไม่สามารถ ว่ายน้ำได้เเละมีหลุมปริศนาจะคอยดูดสิ่งมีชีวิตที่เข้ามาโดยไม่ได้รับอนุญาต โดยเขามีเวลา 1 นาทีในการหนีไปที่ประตู ก่อนหลุมดำจะดูด ไม่เช่นนั้น เขาจะถูกติดในลูปไม่สิ้นสุด
 
-	ใส่เนื้อเรื่องของเกม
-ตัวละคร:
+ตัวละคร: Mock - มนุษย์ปลานักสำรวจ
 
 รูปแบบการเล่น และ กติกา:
 
@@ -56,7 +55,7 @@
 
 ความตื่นเต้น - มีการเเข่งกับเวลาที่นับถอยหลังถ้าเล่นไม่ผ่านก็ต้องเริ่มใหม่
 
-ความกลัว - 
+ความกลัว - กลัวที่จะถูกดูดเเล้ววเริ่มใหม่
 
 ความภูมิใจ - เมื่อผ่านด่านยากหรือเก็บครบทุกคะเเนน
 
@@ -90,8 +89,22 @@ Game Over
 VDO  (Link ไป clip vdo)
 
 อ้างอิง
-	ระบุแหล่งที่มาของ Source Code และ Asset ต่าง ๆ ที่ใช้
-Game Template มาจาก 
+ตัวละคร https://poly.pizza/m/ypEYhCImAB
+
+ประตู https://sketchfab.com/3d-models/a-door-to-heaven-f750baf72ccf4554bf8da375c01f434b?fbclid=IwZXh0bgNhZW0CMTEAAR67mHJ2Mj1PlFjxGSji5JU8zW262RbT3WM32LaYFwAZU_YX3YFRd6R52RrUtQ_aem_FvWFVYXlXNlG6Gt0U8BAsA
+
+ธง check point https://sketchfab.com/3d-models/flagpole-super-mario-bros-3cd01b9f9ced4e509e3180378b666e22?fbclid=IwZXh0bgNhZW0CMTEAAR4s7legipNtMWA3QfSK-5gJ4-oMMVypTl60A67Grwav0wln8YxkPH331I48qQ_aem_Hkw-nQQdzDnf7CxGiy6JhA
+
+แมงกะพรุน https://sketchfab.com/3d-models/jelly-fish-spongebob-4227c0c46a1640ef9c61c455f7bc10f7?fbclid=IwZXh0bgNhZW0CMTEAAR46HvpJ1W1IgBbEXw3LreAInEMvefM0Hl2Gcg-PECi3gl-1Y78HCJC1rX8fbg_aem_CcP6s9UpgWZwQBujhgb3iQ
+
+ฟองสบู่ https://sketchfab.com/3d-models/bubble-test-f98a1a9ed3d54cb080dc8a5c9bc0db46?fbclid=IwZXh0bgNhZW0CMTEAAR6-O79Ufc2kGrHeujIHBX8g3efLGEjXMwVMCFGHhCbl-4wIpExsP2d5zDbzdw_aem__hi9J6_tRETs-XhkAslV-g
+
+โมเดล asset ที่เหลือ มาจาก https://poly.pizza/
+
+รูปภาพหน้า Menu, Victory และ Game Over จาก Gemini
+
+
+
 
 
 
