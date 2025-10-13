@@ -2,6 +2,8 @@
 
 วิชา CP352203-Computer Game Development   ภาคการศึกษาต้น ปีการศึกษา 2568
 
+ลิ้งค์ไฟล์ doc: https://docs.google.com/document/d/177c9w4L0VdRpj_DeZZO_7SUCwhOQqsX2m22MTxkHJ08/edit?usp=sharing
+
 ชื่อเกม : การผจญภัยของม็อค (The Mock Adventure)
 
 จัดทำโดย : 
